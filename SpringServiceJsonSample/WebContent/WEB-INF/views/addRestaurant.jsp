@@ -264,18 +264,18 @@
 											name="satursday3" /> S<input type="checkbox" name="sunday3" /></td>
 
 									</tr>
-																	<tr>
-									<td><form:label path="closedOnModay">
-											<spring:message text="Closed On" />
-										</form:label></td>
-									<td colspan="3">M<form:checkbox path="closedOnModay" /> T<form:checkbox
-											path="closedOnTuesday" /> W<form:checkbox
-											path="closedOnWednesday" /> T<form:checkbox
-											path="closedOnThursday" /> F<form:checkbox
-											path="closedOnFriday" /> S<form:checkbox
-											path="closedOnSatursday" /> S<form:checkbox
-											path="closedOnSunday" /> PH<form:checkbox path="closedOnPH" /></td>
-								</tr>
+									<tr>
+										<td><form:label path="closedOnModay">
+												<spring:message text="Closed On" />
+											</form:label></td>
+										<td colspan="3">M<form:checkbox path="closedOnModay" />
+											T<form:checkbox path="closedOnTuesday" /> W<form:checkbox
+												path="closedOnWednesday" /> T<form:checkbox
+												path="closedOnThursday" /> F<form:checkbox
+												path="closedOnFriday" /> S<form:checkbox
+												path="closedOnSatursday" /> S<form:checkbox
+												path="closedOnSunday" /> PH<form:checkbox path="closedOnPH" /></td>
+									</tr>
 									<tr>
 										<td><form:label path="noOfSeats">
 												<spring:message text="No of Seats Available" />

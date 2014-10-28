@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<context:property-placeholder location="classpath:resources/database.properties" />
+	<context:component-scan base-package="com.keyit" />
+	<mvc:annotation-driven />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/keyit_motivedriverestaurant_001" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.keyit.dto.Restaurant</value>
+				<value>com.keyit.dto.Township</value>
+				<value>com.keyit.dto.OtherFacility</value>
+				<value>com.keyit.dto.RestaurantType</value>
+				<value>com.keyit.dto.CuisineType</value>
+				<value>com.keyit.dto.OperationHour</value>
+				<value>com.keyit.dto.RecommendedDish</value>
+				<value>com.keyit.dto.Suitable</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${dialect}
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="restaurantService" class="com.keyit.service.RestaurantService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Township module starts -->
+	<bean id="townshipService" class="com.keyit.service.TownshipService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Township module end -->
+
+	<!-- Cuisine Type module starts -->
+	<bean id="cuisineTypeService" class="com.keyit.service.CuisineTypeService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<!-- Cuisine Type module end -->
+
+	<!-- RestaurantType module starts -->
+	<bean id="restaurantTypeService" class="com.keyit.service.RestaurantTypeService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<!-- RestaurantType module end -->
+
+	<!-- Other Facilities module starts -->
+	<bean id="facilityService" class="com.keyit.service.FacilityService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Other Facilities module end -->
+
+
+
+	<!-- Operation Hour module starts -->
+	<bean id="operationHourService" class="com.keyit.service.OperationHourService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Operation Hour module end -->
+
+	<!-- Recommended Dish module starts -->
+	<bean id="recommendedDishService" class="com.keyit.service.RecommendedDishService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Recommended Dish module end -->
+
+	<!-- Suitable module starts -->
+	<bean id="suitableService" class="com.keyit.service.SuitableService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Suitable module end -->
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- max upload size in bytes -->
+		<property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+
+		<!-- max size of file in memory (in bytes) -->
+		<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+
+	</bean>
+<!-- 
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error</prop>
+			</props>
+		</property>
+	</bean>
+ -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+</beans>

@@ -52,3 +52,4 @@ function selectAllOptions(selStr) {
 		selObj.options[i].selected = true;
 	}
 }
+

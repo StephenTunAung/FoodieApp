@@ -48,7 +48,7 @@ public class Event implements Serializable {
 	private String coverCharges;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tbl_dresscode", joinColumns = @JoinColumn(name = "RestaurantID"), inverseJoinColumns = @JoinColumn(name = "DressCodeID"))
+	@JoinTable(name = "tbl_eventdresscode", joinColumns = @JoinColumn(name = "EventID"), inverseJoinColumns = @JoinColumn(name = "DressCodeID"))
 	private Set<DressCode> dressCodes = new HashSet<DressCode>();
 
 	@Transient

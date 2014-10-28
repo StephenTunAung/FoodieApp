@@ -78,6 +78,7 @@
 								<th >Restaurant ID</th>
 								<th>Restaurant Name</th>
 								<th>Township</th>
+								<th>Event Detail</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
@@ -86,6 +87,8 @@
 									<td>${restaurant.id}</td>
 									<td>${restaurant.restaurantName}</td>
 									<td>${restaurant.township.townshipName}</td>
+									<td><a
+										href="<c:url value='/event/showEventDetail/${restaurant.id}' />">Event Detail</a></td>
 									<td><a
 										href="<c:url value='/restaurant/edit/${restaurant.id}' />">Edit</a></td>
 									<td><a

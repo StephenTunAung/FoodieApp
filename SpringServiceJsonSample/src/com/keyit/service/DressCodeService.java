@@ -23,6 +23,21 @@ public class DressCodeService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FacilityService.class);
 
+	public DressCode getDressCodeById(Integer id) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+		DressCode dressCode = new DressCode();
+
+		try {
+			dressCode = (DressCode) session.get(DressCode.class, id);
+		} catch (HibernateException he) {
+
+			logger.error(he.getMessage());
+		}
+
+		return dressCode;
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<DressCode> getAllDressCodes() {
 		Session session = this.sessionFactory.getCurrentSession();

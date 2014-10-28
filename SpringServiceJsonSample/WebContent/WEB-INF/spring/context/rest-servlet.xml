@@ -39,6 +39,8 @@
 				<value>com.keyit.dto.OperationHour</value>
 				<value>com.keyit.dto.RecommendedDish</value>
 				<value>com.keyit.dto.Suitable</value>
+				<value>com.keyit.dto.Event</value>
+				<value>com.keyit.dto.DressCode</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -103,6 +105,22 @@
 
 	<!-- Suitable module end -->
 
+	<!-- Event module starts -->
+
+	<!-- Event module starts -->
+	<bean id="eventService" class="com.keyit.service.EventService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Event module end -->
+
+	<!-- DressCode module starts -->
+	<bean id="dressCodeService" class="com.keyit.service.DressCodeService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- DressCode module end -->
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<bean
@@ -119,16 +137,9 @@
 		<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
 
 	</bean>
-<!-- 
-	<bean
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.Exception">error</prop>
-			</props>
-		</property>
-	</bean>
- -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings"> <props> <prop key="java.lang.Exception">error</prop> 
+		</props> </property> </bean> -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

@@ -62,7 +62,7 @@ public class EventService {
 		return event;
 	}
 
-	public void updateRestaurant(Event event) {
+	public void updateEvent(Event event) {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
@@ -73,7 +73,23 @@ public class EventService {
 		}
 
 	}
-	
+
+	public Event getEventByRestaurantId(Integer restaurantId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Event event = new Event();
+		try {
+			event = (Event) session.createQuery(
+					"FROM Event where RestaurantID=" + restaurantId)
+					.uniqueResult();
+
+		} catch (HibernateException he) {
+
+			logger.error(he.getMessage());
+		}
+		return event;
+
+	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

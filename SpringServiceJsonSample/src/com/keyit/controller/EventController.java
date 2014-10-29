@@ -40,8 +40,13 @@ public class EventController {
 
 		Event event = this.eventService.getEventByRestaurantId(id);
 
+		List<DressCode> dressCodes = this.dressCodeService.getAllDressCodes();
+
 		if (event != null) {
 			modelAndView.addObject("event", event);
+			for (DressCode dressCode : event.getDressCodes()) {
+				dressCodes.remove(dressCode);
+			}
 		} else {
 			modelAndView.addObject("event", new Event());
 		}
@@ -50,8 +55,7 @@ public class EventController {
 
 		modelAndView.addObject("restaurant", restaurant);
 
-		modelAndView.addObject("dressCodes",
-				this.dressCodeService.getAllDressCodes());
+		modelAndView.addObject("dressCodes", dressCodes);
 
 		return modelAndView;
 
@@ -79,7 +83,7 @@ public class EventController {
 		event.setRestaurant(restaurant);
 		event.setDressCodes(selectedDressCodes);
 
-		eventService.addEvent(event);
+		eventService.addOrUpdateEvent(event);
 
 		String message = "Restaurant was successfully added.";
 

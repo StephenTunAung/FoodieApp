@@ -66,44 +66,42 @@
 							<form:form action="${addAction}" commandName="event"
 								method="POST" enctype="multipart/form-data"
 								onsubmit="selectAllOptions('selectedDressCodeId');">
-								<table class="table table-striped table-bordered">								
+								<table class="table table-striped table-bordered">
+								<form:hidden path="eventID"/>
 									<tr>
-										<td><input type="hidden" name="restId" value="${restaurant.id}">
-												<spring:message text="Name of Business" />
-											</td>
-										<td width="100%" ><input value="${restaurant.restaurantName}"
-												disabled="disabled" /></td>
+										<td><input type="hidden" name="restId"
+											value="${restaurant.id}"> <spring:message
+												text="Name of Business" /></td>
+										<td width="100%"><input
+											value="${restaurant.restaurantName}" disabled="disabled" /></td>
 
-										<td>
-												<spring:message text="Address" />
-											</td>
-										<td><textarea rows="3" cols="10" >${restaurant.address}</textarea>
+										<td><spring:message text="Address" /></td>
+										<td><textarea rows="3" cols="10">${restaurant.address}</textarea>
 										</td>
 									</tr>
 									<tr>
 										<td><form:label path="eventName">
 												<spring:message text="Name of Event" />
 											</form:label></td>
-										<td><form:input path="eventName"
-												cssClass="form-control" /></td>
+										<td><form:input path="eventName" cssClass="form-control" /></td>
 										<td><form:label path="eventDescription">
 												<spring:message text="Description" />
 											</form:label></td>
-										<td><form:input path="eventDescription" cssClass="form-control" /></td>
+										<td><form:input path="eventDescription"
+												cssClass="form-control" /></td>
 									</tr>
 									<tr>
 										<td><form:label path="eventDate">
 												<spring:message text="Event Date" />
 											</form:label></td>
-										<td><form:input path="eventDate"
-												cssClass="form-control" /></td>
+										<td><form:input path="eventDate" cssClass="form-control" /></td>
 
 										<td><form:label path="eventTime">
 												<spring:message text="Event Time" />
 											</form:label></td>
 										<td><form:input path="eventTime" cssClass="form-control" /></td>
 									</tr>
-									
+
 									<tr>
 										<td><form:label path="coverCharges">
 												<spring:message text="Cover Charges" />
@@ -131,10 +129,15 @@
 											value="<-"></td>
 										<td><form:select multiple="multiple" size="5"
 												path="selectedDressCodeId" style="width: 150">
+												<c:if test="${!empty event.dressCodes}">
+													<c:forEach items="${event.dressCodes}" var="dressCode">
+														<form:option value="${dressCode.dressCodeId}">${dressCode.dressCodeName}</form:option>
+													</c:forEach>
+												</c:if>
 											</form:select></td>
 										<td></td>
 									</tr>
-									
+
 									<tr>
 										<td colspan="2"><input id="mySubmit" type="submit"
 											class="btn btn-primary btn-lg" value="Submit your Event" /></td>

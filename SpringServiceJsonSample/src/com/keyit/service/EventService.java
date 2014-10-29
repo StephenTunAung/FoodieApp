@@ -20,11 +20,16 @@ public class EventService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(EventService.class);
 
-	public void addEvent(Event event) {
+	public void addOrUpdateEvent(Event event) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 
-			session.save(event);
+			// Event toUpdate = this.getEventById(event.getEventID());
+			if (event.getEventID() != null) {
+				session.update(event);
+			} else {
+				session.saveOrUpdate(event);
+			}
 			logger.info("Save");
 		} catch (HibernateException he) {
 			logger.error(he.getMessage());

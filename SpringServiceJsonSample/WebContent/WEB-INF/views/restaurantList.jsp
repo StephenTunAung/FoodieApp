@@ -68,29 +68,38 @@
 
 				<div class="row">
 					<div class="col-xs-6 col-sm-3 placeholder">Search Part</div>
-					<div class="info"><h4>${message}</h4></div>
+					<div class="info">
+						<h4>${message}</h4>
+					</div>
 				</div>
-				
+
 				<c:if test="${!empty listRestaurants}">
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover">
 							<tr class="info">
-								<th >Restaurant ID</th>
+								<th>Restaurant ID</th>
 								<th>Restaurant Name</th>
 								<th>Township</th>
+								<th>Edit Restaurant</th>
 								<th>Event Detail</th>
-								<th>Edit</th>
+								<th>Promotion Detail</th>
 								<th>Delete</th>
 							</tr>
 							<c:forEach items="${listRestaurants}" var="restaurant">
 								<tr>
 									<td>${restaurant.id}</td>
-									<td>${restaurant.restaurantName}</td>
+									<td><a
+										href="<c:url value='/restaurant/edit/${restaurant.id}' />">${restaurant.restaurantName}</a></td>
 									<td>${restaurant.township.townshipName}</td>
 									<td><a
-										href="<c:url value='/event/showEventDetail/${restaurant.id}' />">Event Detail</a></td>
+										href="<c:url value='/restaurant/edit/${restaurant.id}' />">Edit
+											Restaurant</a></td>
 									<td><a
-										href="<c:url value='/restaurant/edit/${restaurant.id}' />">Edit</a></td>
+										href="<c:url value='/event/showEventDetail/${restaurant.id}' />">Event
+											Detail</a></td>
+																		<td><a
+										href="<c:url value='/promotion/showPromotionDetail/${restaurant.id}' />">Promotion
+											Detail</a></td>
 									<td><a
 										href="<c:url value='/restaurant/remove/${restaurant.id}' />">Delete</a></td>
 								</tr>

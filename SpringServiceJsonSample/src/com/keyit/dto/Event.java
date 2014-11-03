@@ -1,6 +1,7 @@
 package com.keyit.dto;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,10 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "tbl_event")
@@ -26,7 +30,7 @@ public class Event implements Serializable {
 	@Id
 	@Column(name = "EventID")
 	@GeneratedValue
-	private Integer eventID;
+	private Integer eventId;
 
 	@OneToOne
 	@JoinColumn(name = "RestaurantID", referencedColumnName = "RestaurantID")
@@ -47,6 +51,20 @@ public class Event implements Serializable {
 	@Column(name = "CoverCharges")
 	private String coverCharges;
 
+	@Column(name = "EventImage")
+	@Lob
+	private Blob eventImage;
+
+	@Transient
+	private MultipartFile eventImagePart;
+
+	@Column(name = "EventThumb")
+	@Lob
+	private Blob eventThumb;
+
+	@Transient
+	private MultipartFile eventThumbPart;
+
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tbl_eventdresscode", joinColumns = @JoinColumn(name = "EventID"), inverseJoinColumns = @JoinColumn(name = "DressCodeID"))
 	private Set<DressCode> dressCodes = new HashSet<DressCode>();
@@ -54,12 +72,12 @@ public class Event implements Serializable {
 	@Transient
 	private List<String> selectedDressCodeId;
 
-	public Integer getEventID() {
-		return eventID;
+	public Integer getEventId() {
+		return eventId;
 	}
 
-	public void setEventID(Integer eventID) {
-		this.eventID = eventID;
+	public void setEventId(Integer eventId) {
+		this.eventId = eventId;
 	}
 
 	public Restaurant getRestaurant() {
@@ -108,6 +126,38 @@ public class Event implements Serializable {
 
 	public void setCoverCharges(String coverCharges) {
 		this.coverCharges = coverCharges;
+	}
+
+	public Blob getEventImage() {
+		return eventImage;
+	}
+
+	public void setEventImage(Blob eventImage) {
+		this.eventImage = eventImage;
+	}
+
+	public MultipartFile getEventImagePart() {
+		return eventImagePart;
+	}
+
+	public void setEventImagePart(MultipartFile eventImagePart) {
+		this.eventImagePart = eventImagePart;
+	}
+
+	public Blob getEventThumb() {
+		return eventThumb;
+	}
+
+	public void setEventThumb(Blob eventThumb) {
+		this.eventThumb = eventThumb;
+	}
+
+	public MultipartFile getEventThumbPart() {
+		return eventThumbPart;
+	}
+
+	public void setEventThumbPart(MultipartFile eventThumbPart) {
+		this.eventThumbPart = eventThumbPart;
 	}
 
 	public Set<DressCode> getDressCodes() {

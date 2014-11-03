@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Restaurant Registration Form</title>
+<title>Event Detail Information</title>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.jpg">
 <link
@@ -21,8 +21,16 @@
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.js" /></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js" /></script>
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/move_selected.js" /></script>
+
+
+<script>
+	$(function($) {
+		$("#datepicker11").datepicker();
+	});
+</script>
 
 </head>
 <body>
@@ -67,34 +75,36 @@
 								method="POST" enctype="multipart/form-data"
 								onsubmit="selectAllOptions('selectedDressCodeId');">
 								<table class="table table-striped table-bordered">
-								<form:hidden path="eventID"/>
+									<form:hidden path="eventId" />
 									<tr>
 										<td><input type="hidden" name="restId"
 											value="${restaurant.id}"> <spring:message
 												text="Name of Business" /></td>
-										<td width="100%"><input
+										<td><input
 											value="${restaurant.restaurantName}" disabled="disabled" /></td>
 
 										<td><spring:message text="Address" /></td>
-										<td><textarea rows="3" cols="10">${restaurant.address}</textarea>
+										<td width="100%"><textarea rows="3" cols="10">${restaurant.address}</textarea>
 										</td>
 									</tr>
 									<tr>
 										<td><form:label path="eventName">
 												<spring:message text="Name of Event" />
 											</form:label></td>
-										<td><form:input path="eventName" cssClass="form-control" /></td>
+										<td><form:textarea path="eventName" cssClass="form-control" /></td>
 										<td><form:label path="eventDescription">
 												<spring:message text="Description" />
 											</form:label></td>
-										<td><form:input path="eventDescription"
+										<td><form:textarea path="eventDescription" rows="3" cols="10"
 												cssClass="form-control" /></td>
 									</tr>
+
 									<tr>
 										<td><form:label path="eventDate">
 												<spring:message text="Event Date" />
 											</form:label></td>
-										<td><form:input path="eventDate" cssClass="form-control" /></td>
+										<td><form:input path="eventDate" id="datepicker11"
+												cssClass="form-control" /></td>
 
 										<td><form:label path="eventTime">
 												<spring:message text="Event Time" />
@@ -135,6 +145,30 @@
 													</c:forEach>
 												</c:if>
 											</form:select></td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td><form:label path="eventImagePart">
+												<spring:message text="Event Image" />
+											</form:label></td>
+										<td><img
+											src="${pageContext.request.contextPath}/resources/temp/image${event.eventId}"
+											height="60px" title="Image for ${event.eventName}"></td>
+										<td><form:input type="file" path="eventImagePart"
+												size="50" /></td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td><form:label path="eventThumbPart">
+												<spring:message text="Event Thumbnail Image" />
+											</form:label></td>
+										<td><img
+											src="${pageContext.request.contextPath}/resources/temp/thumb${event.eventId}"
+											height="60px" title="Thumbnail for ${event.eventName}"></td>
+										<td><form:input type="file" path="eventThumbPart"
+												size="50" /></td>
 										<td></td>
 									</tr>
 

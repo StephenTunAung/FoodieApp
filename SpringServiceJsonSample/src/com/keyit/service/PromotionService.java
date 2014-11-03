@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.keyit.dto.Event;
+import com.keyit.dto.Promotion;
 
-@Service("eventService")
+@Service("promotionService")
 @Transactional
-public class EventService {
+public class PromotionService {
 
 	// Session factory injected by spring context
 	private SessionFactory sessionFactory;
@@ -20,15 +20,15 @@ public class EventService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(EventService.class);
 
-	public void addOrUpdateEvent(Event event) {
+	public void addOrUpdateEvent(Promotion promotion) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 
 			// Event toUpdate = this.getEventById(event.getEventID());
-			if (event.getEventId() != null) {
-				session.update(event);
+			if (promotion.getPromotionId() != null) {
+				session.update(promotion);
 			} else {
-				session.saveOrUpdate(event);
+				session.saveOrUpdate(promotion);
 			}
 			logger.info("Save");
 		} catch (HibernateException he) {
@@ -36,15 +36,14 @@ public class EventService {
 		}
 	}
 
-	public void deleteEvent(Integer eventId) {
+	public void deleteEvent(Integer promotionId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
-			Event event = (Event) session.get(Event.class, eventId);
-			if (null != event) {
-				// this.deleteRecommendedDishByResID(restaurant.getId());
-				// this.deleteOperationHourByResID(restaurantId);
-				session.delete(event);
-				logger.info("Restaurant Name : " + event.getEventName()
+			Promotion promotion = (Promotion) session.get(Promotion.class,
+					promotionId);
+			if (null != promotion) {
+				session.delete(promotion);
+				logger.info("Restaurant Name : " + promotion.getPromoName()
 						+ " : has been deleted successfully");
 			}
 
@@ -54,33 +53,33 @@ public class EventService {
 
 	}
 
-	public Event getEventById(Integer eventId) {
+	public Promotion getPromotionById(Integer promotionId) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Event event = new Event();
+		Promotion promotion = new Promotion();
 		try {
-			event = (Event) session.get(Event.class, new Integer(eventId));
+			promotion = (Promotion) session.get(Promotion.class, new Integer(
+					promotionId));
 
 		} catch (HibernateException he) {
 
 			logger.error(he.getMessage());
 		}
-		return event;
+		return promotion;
 	}
 
-
-	public Event getEventByRestaurantId(Integer restaurantId) {
+	public Promotion getPromotionIdByRestaurantId(Integer restaurantId) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Event event = new Event();
+		Promotion promotion = new Promotion();
 		try {
-			event = (Event) session.createQuery(
-					"FROM Event where RestaurantID=" + restaurantId)
+			promotion = (Promotion) session.createQuery(
+					"FROM Promotion where RestaurantID=" + restaurantId)
 					.uniqueResult();
 
 		} catch (HibernateException he) {
 
 			logger.error(he.getMessage());
 		}
-		return event;
+		return promotion;
 
 	}
 

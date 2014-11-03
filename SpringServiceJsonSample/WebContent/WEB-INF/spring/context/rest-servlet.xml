@@ -41,6 +41,7 @@
 				<value>com.keyit.dto.Suitable</value>
 				<value>com.keyit.dto.Event</value>
 				<value>com.keyit.dto.DressCode</value>
+				<value>com.keyit.dto.Promotion</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -105,7 +106,6 @@
 
 	<!-- Suitable module end -->
 
-	<!-- Event module starts -->
 
 	<!-- Event module starts -->
 	<bean id="eventService" class="com.keyit.service.EventService">
@@ -120,6 +120,14 @@
 	</bean>
 
 	<!-- DressCode module end -->
+
+	<!-- Promotion module starts -->
+
+	<bean id="promotionService" class="com.keyit.service.PromotionService">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<!-- Promotion module end -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->

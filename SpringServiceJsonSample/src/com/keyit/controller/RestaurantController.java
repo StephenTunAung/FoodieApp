@@ -1,10 +1,7 @@
 package com.keyit.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,6 +37,7 @@ import com.keyit.service.RestaurantService;
 import com.keyit.service.RestaurantTypeService;
 import com.keyit.service.SuitableService;
 import com.keyit.service.TownshipService;
+import com.keyit.utils.WebUIHandler;
 
 @Controller
 public class RestaurantController {
@@ -709,31 +707,6 @@ public class RestaurantController {
 
 	}
 
-	private void createTempImage(String fileName, Blob blog) {
-
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-
-		try {
-			if (blog.length() > 0) {
-
-				inputStream = blog.getBinaryStream();
-				outputStream = new FileOutputStream(fileName);
-
-				int readBytes = 0;
-				byte[] buffer = new byte[10000];
-				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-					outputStream.write(buffer, 0, readBytes);
-				}
-				outputStream.close();
-				inputStream.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	private void handleImage(Restaurant restaurant, HttpServletRequest request) {
 
 		if (restaurant.getThumbnailImage() != null) {
@@ -742,7 +715,9 @@ public class RestaurantController {
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
 					+ "/resources/temp/thumb" + restaurant.getId();
-			this.createTempImage(fileName, thumb);
+			
+			WebUIHandler.createTempImage(fileName, thumb);
+			//this.createTempImage(fileName, thumb);
 		}
 
 		if (restaurant.getImage() != null) {
@@ -750,7 +725,8 @@ public class RestaurantController {
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
 					+ "/resources/temp/image" + restaurant.getId();
-			this.createTempImage(fileName, image);
+			WebUIHandler.createTempImage(fileName, image);
+			//this.createTempImage(fileName, image);
 
 		}
 

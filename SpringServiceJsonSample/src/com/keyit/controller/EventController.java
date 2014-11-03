@@ -1,10 +1,14 @@
 package com.keyit.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +26,7 @@ import com.keyit.dto.Restaurant;
 import com.keyit.service.DressCodeService;
 import com.keyit.service.EventService;
 import com.keyit.service.RestaurantService;
+import com.keyit.utils.WebUIHandler;
 
 @Controller
 public class EventController {
@@ -44,6 +49,7 @@ public class EventController {
 
 		if (event != null) {
 			modelAndView.addObject("event", event);
+			this.handleImage(event, request);
 			for (DressCode dressCode : event.getDressCodes()) {
 				dressCodes.remove(dressCode);
 			}
@@ -52,6 +58,8 @@ public class EventController {
 		}
 
 		Restaurant restaurant = this.restaurantService.getRestaurantById(id);
+		
+		
 
 		modelAndView.addObject("restaurant", restaurant);
 
@@ -76,6 +84,71 @@ public class EventController {
 		ModelAndView modelAndView = new ModelAndView(
 				"redirect:/restaurant/restaurants");
 
+		// Is new Event
+
+		Event savedEvent = this.eventService.getEventByRestaurantId(Integer
+				.parseInt(request.getParameter("restId")));
+
+		// Image part
+		Blob blob = null; // is our blob object
+		byte[] thumbnailBuffer;
+		Blob thumbnailBlob = null;
+		byte[] buffer;
+
+		// if edit Event
+		if (savedEvent != null) {
+
+			if (event.getEventImagePart().isEmpty()
+					&& event.getEventThumbPart().isEmpty()) {
+
+				event.setEventImage(savedEvent.getEventImage());
+
+				// Thumb
+
+				event.setEventThumb(savedEvent.getEventThumb());
+
+			} else {
+				try {
+					buffer = event.getEventImagePart().getBytes();
+					blob = new SerialBlob(buffer);
+					event.setEventImage(blob);
+
+					// Thumb
+					thumbnailBuffer = event.getEventThumbPart().getBytes();
+					thumbnailBlob = new SerialBlob(thumbnailBuffer);
+					event.setEventThumb(thumbnailBlob);
+
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		// new Event ends
+
+		// if new Event
+		else {
+			if (null != event.getEventImagePart()
+					&& null != event.getEventThumbPart()) {
+				try {
+					buffer = event.getEventImagePart().getBytes();
+					blob = new SerialBlob(buffer);
+					event.setEventImage(blob);
+
+					// Thumb
+					thumbnailBuffer = event.getEventThumbPart().getBytes();
+					thumbnailBlob = new SerialBlob(thumbnailBuffer);
+					event.setEventThumb(thumbnailBlob);
+
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// Image part end
+
 		Set<DressCode> selectedDressCodes = this.getSelectedDressCode(event);
 		Restaurant restaurant = this.restaurantService
 				.getRestaurantById(Integer.parseInt(request
@@ -90,6 +163,8 @@ public class EventController {
 		modelAndView.addObject("message", message);
 		return modelAndView;
 	}
+	
+	
 
 	private Set<DressCode> getSelectedDressCode(Event event) {
 		List<String> selectedDressCodeIDs = event.getSelectedDressCodeId();
@@ -105,6 +180,30 @@ public class EventController {
 		}
 
 		return selectedDressCodes;
+	}
+	
+	private void handleImage(Event event, HttpServletRequest request) {
+
+		if (event.getEventThumb() != null) {
+			Blob thumb = event.getEventThumb();
+
+			String fileName = request.getSession().getServletContext()
+					.getRealPath("/")
+					+ "/resources/temp/thumb" + event.getEventId();
+			WebUIHandler.createTempImage(fileName, thumb);
+			//this.createTempImage(fileName, thumb);
+		}
+
+		if (event.getEventImage() != null) {
+			Blob image = event.getEventImage();
+			String fileName = request.getSession().getServletContext()
+					.getRealPath("/")
+					+ "/resources/temp/image" + event.getEventId();
+			WebUIHandler.createTempImage(fileName, image);
+			//this.createTempImage(fileName, image);
+
+		}
+
 	}
 
 	private boolean isLogin(HttpServletRequest request) {

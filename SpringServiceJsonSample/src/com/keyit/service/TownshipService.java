@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.keyit.dto.Township;
 
-@Service("townshipService")
+@Service("townshipService") 
 @Transactional
 public class TownshipService {
 

@@ -86,20 +86,27 @@ public class PromotionController {
 		// if edit Promotion
 		if (savedPromotion != null) {
 
-			if (promotion.getPromoImagePart().isEmpty()
-					&& promotion.getPromoImagePart().isEmpty()) {
+			if (promotion.getPromoImagePart().isEmpty()) {
 
 				promotion.setPromoImage(savedPromotion.getPromoImage());
-
-				// Thumb
-
-				promotion.setPromoThumb(savedPromotion.getPromoThumb());
 
 			} else {
 				try {
 					buffer = promotion.getPromoImagePart().getBytes();
 					blob = new SerialBlob(buffer);
 					promotion.setPromoImage(blob);
+
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (promotion.getPromoThumbPart().isEmpty()) {
+				// Thumb
+
+				promotion.setPromoThumb(savedPromotion.getPromoThumb());
+
+			} else {
+				try {
 
 					// Thumb
 					thumbnailBuffer = promotion.getPromoThumbPart().getBytes();
@@ -118,7 +125,7 @@ public class PromotionController {
 		// if new Promotion
 		else {
 			if (null != promotion.getPromoImagePart()
-					&& null != promotion.getPromoImagePart()) {
+					&& null != promotion.getPromoThumbPart()) {
 				try {
 					buffer = promotion.getPromoImagePart().getBytes();
 					blob = new SerialBlob(buffer);
@@ -142,7 +149,7 @@ public class PromotionController {
 						.getParameter("restId")));
 		promotion.setRestaurant(restaurant);
 		// Set checkboxes value
-		
+
 		promotion = this.getUpdatedCheckbox(request, promotion);
 
 		promotionService.addOrUpdateEvent(promotion);
@@ -160,7 +167,7 @@ public class PromotionController {
 
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
-					+ "/resources/temp/thumb" + promotion.getPromotionId();
+					+ "/resources/temp/proThumb" + promotion.getPromotionId();
 			WebUIHandler.createTempImage(fileName, thumb);
 		}
 
@@ -168,14 +175,15 @@ public class PromotionController {
 			Blob image = promotion.getPromoImage();
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
-					+ "/resources/temp/image" + promotion.getPromotionId();
+					+ "/resources/temp/proImage" + promotion.getPromotionId();
 			WebUIHandler.createTempImage(fileName, image);
 
 		}
 
 	}
-	
-	private Promotion getUpdatedCheckbox(HttpServletRequest request, Promotion promotion) {
+
+	private Promotion getUpdatedCheckbox(HttpServletRequest request,
+			Promotion promotion) {
 
 		String validOnMonday = request.getParameter("validOnMonday");
 		String validOnTuesday = request.getParameter("validOnTuesday");
@@ -187,21 +195,22 @@ public class PromotionController {
 		String validOnPH = request.getParameter("validOnPH");
 		String validNA = request.getParameter("validNA");
 
-		
 		promotion.setValidOnMonday(WebUIHandler.stringToBoolean(validOnMonday));
-		promotion.setValidOnTuesday(WebUIHandler.stringToBoolean(validOnTuesday));
-		promotion.setValidOnWednesday(WebUIHandler.stringToBoolean(validOnWednesday));
-		promotion.setValidOnThursday(WebUIHandler.stringToBoolean(validOnThursday));
+		promotion.setValidOnTuesday(WebUIHandler
+				.stringToBoolean(validOnTuesday));
+		promotion.setValidOnWednesday(WebUIHandler
+				.stringToBoolean(validOnWednesday));
+		promotion.setValidOnThursday(WebUIHandler
+				.stringToBoolean(validOnThursday));
 		promotion.setValidOnFriday(WebUIHandler.stringToBoolean(validOnFriday));
-		promotion.setValidOnSatursday(WebUIHandler.stringToBoolean(validOnSatursday));
+		promotion.setValidOnSatursday(WebUIHandler
+				.stringToBoolean(validOnSatursday));
 		promotion.setValidOnSunday(WebUIHandler.stringToBoolean(validOnSunday));
 		promotion.setValidOnPH(WebUIHandler.stringToBoolean(validOnPH));
 		promotion.setValidNA(WebUIHandler.stringToBoolean(validNA));
 
 		return promotion;
 	}
-	
-
 
 	private boolean isLogin(HttpServletRequest request) {
 		AdminUser adminUser = (AdminUser) request.getSession().getAttribute(

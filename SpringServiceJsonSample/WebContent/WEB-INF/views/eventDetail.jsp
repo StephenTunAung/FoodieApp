@@ -153,7 +153,7 @@
 												<spring:message text="Event Image" />
 											</form:label></td>
 										<td><img
-											src="${pageContext.request.contextPath}/resources/temp/image${event.eventId}"
+											src="${pageContext.request.contextPath}/resources/temp/eventImage${event.eventId}"
 											height="60px" title="Image for ${event.eventName}"></td>
 										<td><form:input type="file" path="eventImagePart"
 												size="50" /></td>
@@ -165,7 +165,7 @@
 												<spring:message text="Event Thumbnail Image" />
 											</form:label></td>
 										<td><img
-											src="${pageContext.request.contextPath}/resources/temp/thumb${event.eventId}"
+											src="${pageContext.request.contextPath}/resources/temp/eventThumb${event.eventId}"
 											height="60px" title="Thumbnail for ${event.eventName}"></td>
 										<td><form:input type="file" path="eventThumbPart"
 												size="50" /></td>

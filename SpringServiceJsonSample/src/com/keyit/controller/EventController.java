@@ -58,8 +58,6 @@ public class EventController {
 		}
 
 		Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-		
-		
 
 		modelAndView.addObject("restaurant", restaurant);
 
@@ -98,20 +96,27 @@ public class EventController {
 		// if edit Event
 		if (savedEvent != null) {
 
-			if (event.getEventImagePart().isEmpty()
-					&& event.getEventThumbPart().isEmpty()) {
+			if (event.getEventImagePart().isEmpty()) {
 
 				event.setEventImage(savedEvent.getEventImage());
-
-				// Thumb
-
-				event.setEventThumb(savedEvent.getEventThumb());
 
 			} else {
 				try {
 					buffer = event.getEventImagePart().getBytes();
 					blob = new SerialBlob(buffer);
 					event.setEventImage(blob);
+
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (event.getEventThumbPart().isEmpty()) {
+				// Thumb
+
+				event.setEventThumb(savedEvent.getEventThumb());
+
+			} else {
+				try {
 
 					// Thumb
 					thumbnailBuffer = event.getEventThumbPart().getBytes();
@@ -121,6 +126,7 @@ public class EventController {
 				} catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
+
 			}
 
 		}
@@ -163,8 +169,6 @@ public class EventController {
 		modelAndView.addObject("message", message);
 		return modelAndView;
 	}
-	
-	
 
 	private Set<DressCode> getSelectedDressCode(Event event) {
 		List<String> selectedDressCodeIDs = event.getSelectedDressCodeId();
@@ -181,7 +185,7 @@ public class EventController {
 
 		return selectedDressCodes;
 	}
-	
+
 	private void handleImage(Event event, HttpServletRequest request) {
 
 		if (event.getEventThumb() != null) {
@@ -189,18 +193,18 @@ public class EventController {
 
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
-					+ "/resources/temp/thumb" + event.getEventId();
+					+ "/resources/temp/eventThumb" + event.getEventId();
 			WebUIHandler.createTempImage(fileName, thumb);
-			//this.createTempImage(fileName, thumb);
+			// this.createTempImage(fileName, thumb);
 		}
 
 		if (event.getEventImage() != null) {
 			Blob image = event.getEventImage();
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
-					+ "/resources/temp/image" + event.getEventId();
+					+ "/resources/temp/eventImage" + event.getEventId();
 			WebUIHandler.createTempImage(fileName, image);
-			//this.createTempImage(fileName, image);
+			// this.createTempImage(fileName, image);
 
 		}
 

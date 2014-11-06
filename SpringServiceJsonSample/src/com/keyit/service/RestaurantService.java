@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.keyit.dto.Event;
 import com.keyit.dto.OperationHour;
+import com.keyit.dto.Promotion;
 import com.keyit.dto.RecommendedDish;
 import com.keyit.dto.Restaurant;
 
@@ -55,6 +57,9 @@ public class RestaurantService {
 			if (null != restaurant) {
 				this.deleteRecommendedDishByResID(restaurant.getId());
 				this.deleteOperationHourByResID(restaurantId);
+				this.deleteEventByRestaurantId(restaurant.getId());
+				this.deletePromotionByRestaurantId(restaurant.getId());
+
 				session.delete(restaurant);
 				logger.info("Restaurant Name : "
 						+ restaurant.getRestaurantName()
@@ -117,6 +122,40 @@ public class RestaurantService {
 				.list();
 		for (RecommendedDish recommendedDish : rds) {
 			session.delete(recommendedDish);
+		}
+
+	}
+
+	private void deleteEventByRestaurantId(Integer restaurantId) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		try {
+			Event event = (Event) session.createQuery(
+					"FROM Event where RestaurantID=" + restaurantId)
+					.uniqueResult();
+			session.delete(event);
+
+		} catch (HibernateException he) {
+
+			logger.error(he.getMessage());
+		}
+
+	}
+
+	private void deletePromotionByRestaurantId(Integer restaurantId) {
+
+		Session session = this.sessionFactory.getCurrentSession();
+
+		try {
+			Promotion promotion = (Promotion) session.createQuery(
+					"FROM Promotion where RestaurantID=" + restaurantId)
+					.uniqueResult();
+			session.delete(promotion);
+
+		} catch (HibernateException he) {
+
+			logger.error(he.getMessage());
 		}
 
 	}

@@ -115,6 +115,7 @@ public class RestaurantController {
 
 		ModelAndView modelAndView = new ModelAndView(
 				"redirect:/restaurant/restaurants");
+
 		// Image part
 		Blob blob = null; // is our blob object
 
@@ -715,9 +716,9 @@ public class RestaurantController {
 			String fileName = request.getSession().getServletContext()
 					.getRealPath("/")
 					+ "/resources/temp/thumb" + restaurant.getId();
-			
+
 			WebUIHandler.createTempImage(fileName, thumb);
-			//this.createTempImage(fileName, thumb);
+			// this.createTempImage(fileName, thumb);
 		}
 
 		if (restaurant.getImage() != null) {
@@ -726,7 +727,7 @@ public class RestaurantController {
 					.getRealPath("/")
 					+ "/resources/temp/image" + restaurant.getId();
 			WebUIHandler.createTempImage(fileName, image);
-			//this.createTempImage(fileName, image);
+			// this.createTempImage(fileName, image);
 
 		}
 

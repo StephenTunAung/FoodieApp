@@ -163,7 +163,7 @@
 												<spring:message text="Promotion Image" />
 											</form:label></td>
 										<td><img
-											src="${pageContext.request.contextPath}/resources/temp/image${promotion.promotionId}"
+											src="${pageContext.request.contextPath}/resources/temp/proImage${promotion.promotionId}"
 											height="60px" title="Image for ${promotion.promoName}"></td>
 										<td><form:input type="file" path="promoImagePart"
 												size="50" /></td>
@@ -175,7 +175,7 @@
 												<spring:message text="Promotion Thumbnail Image" />
 											</form:label></td>
 										<td><img
-											src="${pageContext.request.contextPath}/resources/temp/thumb${promotion.promotionId}"
+											src="${pageContext.request.contextPath}/resources/temp/proThumb${promotion.promotionId}"
 											height="60px" title="Thumbnail for ${promotion.promoName}"></td>
 										<td><form:input type="file" path="promoThumbPart"
 												size="50" /></td>

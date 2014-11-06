@@ -67,7 +67,6 @@ public class EventService {
 		return event;
 	}
 
-
 	public Event getEventByRestaurantId(Integer restaurantId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Event event = new Event();

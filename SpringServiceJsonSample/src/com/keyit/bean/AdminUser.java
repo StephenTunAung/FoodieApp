@@ -24,5 +24,4 @@ public class AdminUser implements Serializable {
 		this.password = password;
 	}
 
-
 }

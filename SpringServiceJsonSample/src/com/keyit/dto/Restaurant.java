@@ -22,47 +22,47 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name = "TBL_RESTAURANT")
+@Table(name = "tbl_restaurant")
 public class Restaurant implements Serializable {
 
 	private static final long serialVersionUID = -7947190256127387293L;
 
 	@Id
-	@Column(name = "RESTAURANTID")
+	@Column(name = "RestaurantID")
 	@GeneratedValue
 	private Integer id;
 
-	@Column(name = "RESTAURANTNAME")
+	@Column(name = "RestaurantName")
 	private String restaurantName;
 
-	@Column(name = "ADDRESS")
+	@Column(name = "Address")
 	private String address;
 
-	@Column(name = "CONTACTNO")
+	@Column(name = "ContactNo")
 	private String contactNo;
 
-	@Column(name = "EMAILADDRESS")
+	@Column(name = "EmailAddress")
 	private String emailAddress;
 
-	@Column(name = "WEBADDRESS")
+	@Column(name = "WebAddress")
 	private String webAddress;
 
-	@Column(name = "FACEBOOKADDRESS")
+	@Column(name = "FacebookAddress")
 	private String facebookAddress;
 
-	@Column(name = "INCHARGE")
+	@Column(name = "InCharge")
 	private String inCharge;
 
-	@Column(name = "INCHARGECONTACTNO")
+	@Column(name = "InChargeContactNo")
 	private String inChargeContactNo;
 
-	@Column(name = "DESIGNATION")
+	@Column(name = "Designation")
 	private String designation;
 
-	@Column(name = "PAYMENTMETHOD")
+	@Column(name = "PaymentMethod")
 	private String paymentMethod;
 
-	@Column(name = "FROMPRICERANGE")
+	@Column(name = "FromPriceRange")
 	private float fromPriceRange;
 
 	@Column(name = "ToPriceRange")

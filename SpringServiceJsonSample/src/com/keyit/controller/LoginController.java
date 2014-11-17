@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.keyit.bean.AdminUser;
-import com.webservice.utility.DBUtility;
 
 @Controller
 public class LoginController {
@@ -86,8 +85,10 @@ public class LoginController {
 
 	private boolean checkUser(String userName, String password) {
 		Properties prop = new Properties();
-		InputStream inputStream = DBUtility.class.getClassLoader()
+
+		InputStream inputStream = LoginController.class.getClassLoader()
 				.getResourceAsStream("/resources/admin.properties");
+
 		try {
 			prop.load(inputStream);
 		} catch (IOException e) {

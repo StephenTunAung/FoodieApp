@@ -3,6 +3,9 @@ package com.keyit.controller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,6 +89,21 @@ public class EventController {
 
 		Event savedEvent = this.eventService.getEventByRestaurantId(Integer
 				.parseInt(request.getParameter("restId")));
+
+		Date date;
+		String formattedDate = null;
+		try {
+			date = new SimpleDateFormat("yyyy-MMM-dd").parse(event
+					.getEventDate());
+			formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		} catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		if (formattedDate != null) {
+			event.setEventDate(formattedDate);
+		} else {
+			event.setEventDate(savedEvent.getEventDate());
+		}
 
 		// Image part
 		Blob blob = null; // is our blob object

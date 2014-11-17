@@ -59,464 +59,423 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header">Edit Restaurant</h1>
 
-				<div class="row">
-					<div class="col-xs-6 col-sm-3 placeholder">
 
 						<c:url var="editAction" value="/restaurant/editing"></c:url>
-
-						<form:form action="${editAction}" commandName="restaurant"
-							method="POST" enctype="multipart/form-data"
-							onsubmit="selectAllOptions('selectedFacilitiesId');selectAllOptions('selectedRestaurantTypeId');selectAllOptions('selectedCuisineTypeId');selectAllOptions('selectedSuitableId');">
-							<table class="table table-striped table-bordered">
-								<c:if test="${!empty restaurant.restaurantName}">
+						<div class="row list-group">
+							<form:form action="${editAction}" commandName="restaurant"
+								method="POST" enctype="multipart/form-data"
+								onsubmit="selectAllOptions('selectedFacilitiesId');selectAllOptions('selectedRestaurantTypeId');selectAllOptions('selectedCuisineTypeId');selectAllOptions('selectedSuitableId');">
+								<table class="table table-striped table-bordered">
+									<c:if test="${!empty restaurant.restaurantName}">
+										<tr>
+											<td><form:label path="id">
+													<spring:message text="ID" />
+												</form:label></td>
+											<td><form:input path="id" readonly="true" size="20"
+													disabled="true" /> <form:hidden path="id" /></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</c:if>
 									<tr>
-										<td><form:label path="id">
-												<spring:message text="ID" />
+										<td><form:label path="restaurantName">
+												<spring:message text="Name of Business" />
 											</form:label></td>
-										<td><form:input path="id" readonly="true" size="8"
-												cssClass="form-control" disabled="true" /> <form:hidden
-												path="id" /></td>
+										<td><form:input path="restaurantName"
+												cssClass="form-control" /></td>
+										<td><form:label path="address">
+												<spring:message text="Address" />
+											</form:label></td>
+										<td><form:textarea path="address" cssClass="form-control"
+												rows="3" cols="10" /></td>
+									</tr>
+
+									<tr>
+										<td><form:label path="township.townshipId">
+												<spring:message text="Township Name" />
+											</form:label></td>
+										<td><form:select path="township.townshipId"
+												cssClass="form-control">
+												<c:forEach items="${townships}" var="town">
+													<form:option value="${town.townshipId}">${town.townshipName}</form:option>
+												</c:forEach>
+											</form:select></td>
+										<td><form:label path="contactNo">
+												<spring:message text="Contact No" />
+											</form:label></td>
+										<td><form:input path="contactNo" cssClass="form-control" /></td>
+									</tr>
+									<tr>
+										<td><form:label path="emailAddress">
+												<spring:message text="Email Address" />
+											</form:label></td>
+										<td><form:input path="emailAddress"
+												cssClass="form-control" /></td>
+
+										<td><form:label path="webAddress">
+												<spring:message text="Web Address" />
+											</form:label></td>
+										<td><form:input path="webAddress" cssClass="form-control" /></td>
+									</tr>
+									<tr>
+										<td><form:label path="facebookAddress">
+												<spring:message text="Facebook Address" />
+											</form:label></td>
+										<td><form:input path="facebookAddress"
+												cssClass="form-control" /></td>
+
 										<td></td>
 										<td></td>
 									</tr>
-								</c:if>
-								<tr>
-									<td><form:label path="restaurantName">
-											<spring:message text="Name of Business" />
-										</form:label></td>
-									<td><form:input path="restaurantName"
-											cssClass="form-control" /></td>
-									<td><form:label path="address">
-											<spring:message text="Address" />
-										</form:label></td>
-									<td><form:textarea path="address" cssClass="form-control"
-											rows="3" cols="10" /></td>
-								</tr>
+									<tr>
+										<td><form:label path="inCharge">
+												<spring:message text="Name of Person Incharge" />
+											</form:label></td>
+										<td><form:input path="inCharge" cssClass="form-control" /></td>
 
-								<tr>
-									<td><form:label path="township.townshipId">
-											<spring:message text="Township Name" />
-										</form:label></td>
-									<td><form:select path="township.townshipId"
-											cssClass="form-control">
-											<c:forEach items="${townships}" var="town">
-												<form:option value="${town.townshipId}">${town.townshipName}</form:option>
-											</c:forEach>
-										</form:select></td>
-									<td><form:label path="contactNo">
-											<spring:message text="Contact No" />
-										</form:label></td>
-									<td><form:input path="contactNo" cssClass="form-control" /></td>
-								</tr>
-								<tr>
-									<td><form:label path="emailAddress">
-											<spring:message text="Email Address" />
-										</form:label></td>
-									<td><form:input path="emailAddress"
-											cssClass="form-control" /></td>
+										<td><form:label path="inChargeContactNo">
+												<spring:message text="InCharge Contact No." />
+											</form:label></td>
+										<td><form:input path="inChargeContactNo"
+												cssClass="form-control" /></td>
+									</tr>
+									<tr>
+										<td><form:label path="designation">
+												<spring:message text="Designation" />
+											</form:label></td>
+										<td><form:input path="designation"
+												cssClass="form-control" /></td>
 
-									<td><form:label path="webAddress">
-											<spring:message text="Web Address" />
-										</form:label></td>
-									<td><form:input path="webAddress" cssClass="form-control" /></td>
-								</tr>
-								<tr>
-									<td><form:label path="facebookAddress">
-											<spring:message text="Facebook Address" />
-										</form:label></td>
-									<td><form:input path="facebookAddress"
-											cssClass="form-control" /></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td><form:label path="cuisineTypes">
+												<spring:message text="Type of Cuisine" />
+											</form:label></td>
 
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td><form:label path="inCharge">
-											<spring:message text="Name of Person Incharge" />
-										</form:label></td>
-									<td><form:input path="inCharge" cssClass="form-control" /></td>
-
-									<td><form:label path="inChargeContactNo">
-											<spring:message text="InCharge Contact No." />
-										</form:label></td>
-									<td><form:input path="inChargeContactNo"
-											cssClass="form-control" /></td>
-								</tr>
-								<tr>
-									<td><form:label path="designation">
-											<spring:message text="Designation" />
-										</form:label></td>
-									<td><form:input path="designation" cssClass="form-control" /></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-
-									<td><form:label path="cuisineTypes">
-											<spring:message text="Type of Cuisine" />
-										</form:label> <select multiple="multiple" id="cuisineTypes"
-										name="cuisineTypes" size="10" style="width: 150">
-											<c:forEach items="${cuisineTypes}" var="cuisineType">
-												<option value="${cuisineType.cuisineTypeId}">${cuisineType.cuisineName}</option>
-											</c:forEach>
-									</select></td>
-									<td align="center" valign="middle"><input type="button"
-										onClick="moveOptions(this.form.cuisineTypes,this.form.selectedCuisineTypeId);"
-										value="->"><br /> <input type="button"
-										onClick="moveOptions(this.form.selectedCuisineTypeId,this.form.cuisineTypes);"
-										value="<-"></td>
-									<td><form:select multiple="multiple" size="10"
-											path="selectedCuisineTypeId" style="width: 150">
-											<c:if test="${!empty restaurant.cuisineTypes}">
-												<c:forEach items="${restaurant.cuisineTypes}" var="cuisine">
-													<form:option value="${cuisine.cuisineTypeId}">${cuisine.cuisineName}</form:option>
+										<td><select multiple="multiple" id="cuisineTypes"
+											name="cuisineTypes" size="10" style="width: 150">
+												<c:forEach items="${cuisineTypes}" var="cuisineType">
+													<option value="${cuisineType.cuisineTypeId}">${cuisineType.cuisineName}</option>
 												</c:forEach>
-											</c:if>
-										</form:select></td>
-									<td></td>
-								</tr>
+										</select></td>
+										<td align="center" valign="middle"><br /> <br /> <input
+											type="button"
+											onClick="moveOptions(this.form.cuisineTypes,this.form.selectedCuisineTypeId);"
+											value="->"><br /> <br /> <input type="button"
+											onClick="moveOptions(this.form.selectedCuisineTypeId,this.form.cuisineTypes);"
+											value="<-"></td>
+										<td><form:select multiple="multiple" size="10"
+												path="selectedCuisineTypeId" style="width: 150">
+												<c:if test="${!empty restaurant.cuisineTypes}">
+													<c:forEach items="${restaurant.cuisineTypes}" var="cuisine">
+														<form:option value="${cuisine.cuisineTypeId}">${cuisine.cuisineName}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select></td>
 
-								<tr>
+									</tr>
 
-									<td><form:label path="restaurantTypes">
-											<spring:message text="Type of Restaurant" />
-										</form:label> <select multiple="multiple" id="restaurantTypes"
-										name="restaurantTypes" size="10" style="width: 150">
-											<c:forEach items="${restaurantTypes}" var="restaurantType">
-												<option value="${restaurantType.restaurantTypeId}">${restaurantType.restaurantTypeName}</option>
-											</c:forEach>
-									</select></td>
-									<td align="center" valign="middle"><input type="button"
-										onClick="moveOptions(this.form.restaurantTypes,this.form.selectedRestaurantTypeId);"
-										value="->"><br /> <input type="button"
-										onClick="moveOptions(this.form.selectedRestaurantTypeId,this.form.restaurantTypes);"
-										value="<-"></td>
-									<td><form:select multiple="multiple" size="10"
-											path="selectedRestaurantTypeId" style="width: 150">
-											<c:if test="${!empty restaurant.restaurantTypes}">
-												<c:forEach items="${restaurant.restaurantTypes}" var="type">
-													<form:option value="${type.restaurantTypeId}">${type.restaurantTypeName}</form:option>
+									<tr>
+										<td><form:label path="restaurantTypes">
+												<spring:message text="Type of Restaurant" />
+											</form:label></td>
+
+										<td><select multiple="multiple" id="restaurantTypes"
+											name="restaurantTypes" size="10" style="width: 150">
+												<c:forEach items="${restaurantTypes}" var="restaurantType">
+													<option value="${restaurantType.restaurantTypeId}">${restaurantType.restaurantTypeName}</option>
 												</c:forEach>
-											</c:if>
-										</form:select></td>
-									<td></td>
-								</tr>
+										</select></td>
+										<td align="center" valign="middle"><br /> <br /> <input
+											type="button"
+											onClick="moveOptions(this.form.restaurantTypes,this.form.selectedRestaurantTypeId);"
+											value="->"><br /> <br /> <input type="button"
+											onClick="moveOptions(this.form.selectedRestaurantTypeId,this.form.restaurantTypes);"
+											value="<-"></td>
+										<td><form:select multiple="multiple" size="10"
+												path="selectedRestaurantTypeId" style="width: 150">
+												<c:if test="${!empty restaurant.restaurantTypes}">
+													<c:forEach items="${restaurant.restaurantTypes}" var="type">
+														<form:option value="${type.restaurantTypeId}">${type.restaurantTypeName}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select></td>
 
-								<tr>
-									<td><form:label path="paymentMethod">
-											<spring:message text="Accepted Payment Method" />
-										</form:label></td>
-									<td><c:if test="${restaurant.paymentMethod eq '1'}">
-											<form:select path="paymentMethod" cssClass="form-control">
-												<form:option value="1">Both</form:option>
-												<form:option value="2">Cash Only</form:option>
-												<form:option value="3">Cards</form:option>
-											</form:select>
-										</c:if> <c:if test="${restaurant.paymentMethod eq '2'}">
-											<form:select path="paymentMethod" cssClass="form-control">
-												<form:option value="2">Cash Only</form:option>
-												<form:option value="1">Both</form:option>
-												<form:option value="3">Cards</form:option>
-											</form:select>
-										</c:if> <c:if test="${restaurant.paymentMethod eq '3'}">
-											<form:select path="paymentMethod" cssClass="form-control">
-												<form:option value="3">Cards</form:option>
-												<form:option value="1">Both</form:option>
-												<form:option value="2">Cash Only</form:option>
-											</form:select>
-										</c:if></td>
-								</tr>
+									</tr>
 
-								<tr>
+									<tr>
+										<td><form:label path="paymentMethod">
+												<spring:message text="Accepted Payment Method" />
+											</form:label></td>
+										<td><c:if test="${restaurant.paymentMethod eq '1'}">
+												<form:select path="paymentMethod" cssClass="form-control">
+													<form:option value="1">Both</form:option>
+													<form:option value="2">Cash Only</form:option>
+													<form:option value="3">Cards</form:option>
+												</form:select>
+											</c:if> <c:if test="${restaurant.paymentMethod eq '2'}">
+												<form:select path="paymentMethod" cssClass="form-control">
+													<form:option value="2">Cash Only</form:option>
+													<form:option value="1">Both</form:option>
+													<form:option value="3">Cards</form:option>
+												</form:select>
+											</c:if> <c:if test="${restaurant.paymentMethod eq '3'}">
+												<form:select path="paymentMethod" cssClass="form-control">
+													<form:option value="3">Cards</form:option>
+													<form:option value="1">Both</form:option>
+													<form:option value="2">Cash Only</form:option>
+												</form:select>
+											</c:if></td>
+									</tr>
 
-									<td><form:label path="facilities">
-											<spring:message text="Other Facilities Available" />
-										</form:label> <select multiple="multiple" id="facilities" name="facilities"
-										size="10" style="width: 150">
-											<c:forEach items="${facilities}" var="facility">
-												<option value="${facility.otherFacilityId}">${facility.otherFacilityName}</option>
-											</c:forEach>
-									</select></td>
-									<td align="center" valign="middle"><input type="button"
-										onClick="moveOptions(this.form.facilities,this.form.selectedFacilitiesId);"
-										value="->"><br /> <input type="button"
-										onClick="moveOptions(this.form.selectedFacilitiesId,this.form.facilities);"
-										value="<-"></td>
-									<td><form:select multiple="multiple" size="10"
-											path="selectedFacilitiesId" style="width: 150">
-											<c:if test="${!empty restaurant.facilities}">
-												<c:forEach items="${restaurant.facilities}" var="fac">
-													<form:option value="${fac.otherFacilityId}">${fac.otherFacilityName}</form:option>
+									<tr>
+										<td><form:label path="facilities">
+												<spring:message text="Other Facilities Available" />
+											</form:label></td>
+										<td><select multiple="multiple" id="facilities"
+											name="facilities" size="10" style="width: 150">
+												<c:forEach items="${facilities}" var="facility">
+													<option value="${facility.otherFacilityId}">${facility.otherFacilityName}</option>
 												</c:forEach>
-											</c:if>
-										</form:select></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td><form:label path="fromPriceRange">
-											<spring:message text="Price Range Per Head" />
-										</form:label></td>
-									<td><form:input path="fromPriceRange"
-											cssClass="form-control" placeholder="Ks" /></td>
+										</select></td>
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
+											onClick="moveOptions(this.form.facilities,this.form.selectedFacilitiesId);"
+											value="->"><br />
+										<br /> <input type="button"
+											onClick="moveOptions(this.form.selectedFacilitiesId,this.form.facilities);"
+											value="<-"></td>
+										<td><form:select multiple="multiple" size="10"
+												path="selectedFacilitiesId" style="width: 150">
+												<c:if test="${!empty restaurant.facilities}">
+													<c:forEach items="${restaurant.facilities}" var="fac">
+														<form:option value="${fac.otherFacilityId}">${fac.otherFacilityName}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select></td>
 
-									<td><form:label path="toPriceRange">
-											<spring:message text="To" />
-										</form:label></td>
-									<td><form:input path="toPriceRange"
-											cssClass="form-control" placeholder="Ks" /></td>
-								</tr>
-								<tr>
-									<td><form:label path="fromPriceRange">
-											<spring:message text="Operation Hours" />
-										</form:label></td>
-									<td><input type="text" name="fromOpHour1"
-										value="${operationHour1.fromOpHour}" /></td>
-									<td>to</td>
-									<td><input type="text" name="toOpHour1"
-										value="${operationHour1.toOpHour}" /> M<c:if
-											test="${not operationHour1.monday}">
-											<input type="checkbox" name="monday1" />
-										</c:if> <c:if test="${operationHour1.monday}">
-											<input type="checkbox" checked="checked" name="monday1" />
-										</c:if> T<c:if test="${not operationHour1.tuesday}">
-											<input type="checkbox" name="tuesday1" />
-										</c:if> <c:if test="${operationHour1.tuesday}">
-											<input type="checkbox" checked="checked" name="tuesday1" />
-										</c:if> W<c:if test="${not operationHour1.wednesday}">
-											<input type="checkbox" name="wednesday1" />
-										</c:if> <c:if test="${operationHour1.wednesday}">
-											<input type="checkbox" checked="checked" name="wednesday1" />
-										</c:if> T<c:if test="${not operationHour1.thursday}">
-											<input type="checkbox" name="thursday1" />
-										</c:if> <c:if test="${operationHour1.thursday}">
-											<input type="checkbox" checked="checked" name="thursday1" />
-										</c:if> F<c:if test="${not operationHour1.friday}">
-											<input type="checkbox" name="friday1" />
-										</c:if> <c:if test="${operationHour1.friday}">
-											<input type="checkbox" checked="checked" name="friday1" />
-										</c:if> S<c:if test="${not operationHour1.satursday}">
-											<input type="checkbox" name="satursday1" />
-										</c:if> <c:if test="${operationHour1.satursday}">
-											<input type="checkbox" checked="checked" name="satursday1" />
-										</c:if> S<c:if test="${not operationHour1.sunday}">
-											<input type="checkbox" name="sunday1" />
-										</c:if> <c:if test="${operationHour1.sunday}">
-											<input type="checkbox" checked="checked" name="sunday1" />
-										</c:if></td>
+									</tr>
+									<tr>
+										<td><form:label path="fromPriceRange">
+												<spring:message text="Price Range Per Head" />
+											</form:label></td>
+										<td><form:input path="fromPriceRange"
+												cssClass="form-control" placeholder="Ks" /></td>
 
-								</tr>
+										<td><form:label path="toPriceRange">
+												<spring:message text="To" />
+											</form:label></td>
+										<td><form:input path="toPriceRange"
+												cssClass="form-control" placeholder="Ks" /></td>
+									</tr>
+									<tr>
+										<td><form:label path="fromPriceRange">
+												<spring:message text="Operation Hours" />
+											</form:label></td>
+
+										<td colspan="3"><input type="text"
+											name="restOperationHour1"
+											value="${operationHour1.restOperationHours}"
+											class="form-control" /></td>
+									</tr>
 
 
-								<tr>
-									<td></td>
-									<td><input type="text" name="fromOpHour2"
-										value="${operationHour2.fromOpHour}" /></td>
-									<td>to</td>
-									<td><input type="text" name="toOpHour2"
-										value="${operationHour2.toOpHour}" /> M<c:if
-											test="${not operationHour2.monday}">
-											<input type="checkbox" name="monday2" />
-										</c:if> <c:if test="${operationHour2.monday}">
-											<input type="checkbox" checked="checked" name="monday2" />
-										</c:if> T<c:if test="${not operationHour2.tuesday}">
-											<input type="checkbox" name="tuesday2" />
-										</c:if> <c:if test="${operationHour2.tuesday}">
-											<input type="checkbox" checked="checked" name="tuesday2" />
-										</c:if> W<c:if test="${not operationHour2.wednesday}">
-											<input type="checkbox" name="wednesday2" />
-										</c:if> <c:if test="${operationHour2.wednesday}">
-											<input type="checkbox" checked="checked" name="wednesday2" />
-										</c:if> T<c:if test="${not operationHour2.thursday}">
-											<input type="checkbox" name="thursday2" />
-										</c:if> <c:if test="${operationHour2.thursday}">
-											<input type="checkbox" checked="checked" name="thursday2" />
-										</c:if> F<c:if test="${not operationHour2.friday}">
-											<input type="checkbox" name="friday2" />
-										</c:if> <c:if test="${operationHour2.friday}">
-											<input type="checkbox" checked="checked" name="friday2" />
-										</c:if> S<c:if test="${not operationHour2.satursday}">
-											<input type="checkbox" name="satursday2" />
-										</c:if> <c:if test="${operationHour2.satursday}">
-											<input type="checkbox" checked="checked" name="satursday2" />
-										</c:if> S<c:if test="${not operationHour2.sunday}">
-											<input type="checkbox" name="sunday2" />
-										</c:if> <c:if test="${operationHour2.sunday}">
-											<input type="checkbox" checked="checked" name="sunday2" />
-										</c:if></td>
+									<tr>
+										<td></td>
+										<td colspan="3"><input type="text"
+											name="restOperationHour2"
+											value="${operationHour2.restOperationHours}"
+											class="form-control" /></td>
 
-								</tr>
-								<tr>
-									<td></td>
-									<td><input type="text" name="fromOpHour3"
-										value="${operationHour3.fromOpHour}" /></td>
-									<td>to</td>
-									<td><input type="text" name="toOpHour3"
-										value="${operationHour3.toOpHour}" /> M<c:if
-											test="${not operationHour3.monday}">
-											<input type="checkbox" name="monday3" />
-										</c:if> <c:if test="${operationHour3.monday}">
-											<input type="checkbox" checked="checked" name="monday3" />
-										</c:if> T<c:if test="${not operationHour3.tuesday}">
-											<input type="checkbox" name="tuesday3" />
-										</c:if> <c:if test="${operationHour3.tuesday}">
-											<input type="checkbox" checked="checked" name="tuesday3" />
-										</c:if> W<c:if test="${not operationHour3.wednesday}">
-											<input type="checkbox" name="wednesday3" />
-										</c:if> <c:if test="${operationHour3.wednesday}">
-											<input type="checkbox" checked="checked" name="wednesday3" />
-										</c:if> T<c:if test="${not operationHour3.thursday}">
-											<input type="checkbox" name="thursday3" />
-										</c:if> <c:if test="${operationHour3.thursday}">
-											<input type="checkbox" checked="checked" name="thursday3" />
-										</c:if> F<c:if test="${not operationHour3.friday}">
-											<input type="checkbox" name="friday3" />
-										</c:if> <c:if test="${operationHour3.friday}">
-											<input type="checkbox" checked="checked" name="friday3" />
-										</c:if> S<c:if test="${not operationHour3.satursday}">
-											<input type="checkbox" name="satursday3" />
-										</c:if> <c:if test="${operationHour3.satursday}">
-											<input type="checkbox" checked="checked" name="satursday3" />
-										</c:if> S<c:if test="${not operationHour3.sunday}">
-											<input type="checkbox" name="sunday3" />
-										</c:if> <c:if test="${operationHour3.sunday}">
-											<input type="checkbox" checked="checked" name="sunday3" />
-										</c:if></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="3"><input type="text"
+											name="restOperationHour3"
+											value="${operationHour3.restOperationHours}"
+											class="form-control" /></td>
 
-								</tr>
-								<tr>
-									<td><form:label path="closedOnModay">
-											<spring:message text="Closed On" />
-										</form:label></td>
-									<td colspan="3">M<form:checkbox path="closedOnModay" /> T<form:checkbox
-											path="closedOnTuesday" /> W<form:checkbox
-											path="closedOnWednesday" /> T<form:checkbox
-											path="closedOnThursday" /> F<form:checkbox
-											path="closedOnFriday" /> S<form:checkbox
-											path="closedOnSatursday" /> S<form:checkbox
-											path="closedOnSunday" /> PH<form:checkbox path="closedOnPH" /></td>
-								</tr>
+									</tr>
+									<tr>
+										<td><form:label path="closedOnModay">
+												<spring:message text="Closed On" />
+											</form:label></td>
+										<td colspan="3">M<form:checkbox path="closedOnModay" />
+											T<form:checkbox path="closedOnTuesday" /> W<form:checkbox
+												path="closedOnWednesday" /> T<form:checkbox
+												path="closedOnThursday" /> F<form:checkbox
+												path="closedOnFriday" /> S<form:checkbox
+												path="closedOnSatursday" /> S<form:checkbox
+												path="closedOnSunday" /> PH<form:checkbox path="closedOnPH" /></td>
+									</tr>
 
-								<tr>
-									<td><form:label path="noOfSeats">
-											<spring:message text="No of Seats Available" />
-										</form:label></td>
-									<td><form:input path="noOfSeats" cssClass="form-control" /></td>
+									<tr>
+										<td><form:label path="noOfSeats">
+												<spring:message text="No of Seats Available" />
+											</form:label></td>
+										<td><form:input path="noOfSeats" cssClass="form-control" /></td>
 
-									<td><form:label path="alcoholicAvailable">
-											<spring:message text="Alcoholic Drinks Available" />
-										</form:label></td>
-									<td><form:checkbox path="alcoholicAvailable" />Checked:
-										Yes</td>
+										<td><form:label path="alcoholicAvailable">
+												<spring:message text="Alcoholic Drinks Available" />
+											</form:label></td>
+										<td><form:checkbox path="alcoholicAvailable" />Checked:
+											Yes</td>
 
-								</tr>
+									</tr>
 
-								<tr>
+									<tr>
+										<td><form:label path="suitables">
+												<spring:message text="Suitable For" />
+											</form:label></td>
 
-									<td><form:label path="suitables">
-											<spring:message text="Suitable For" />
-										</form:label> <select multiple="multiple" id="suitables" name="suitables"
-										size="10" style="width: 150">
-											<c:forEach items="${suitables}" var="suitable">
-												<option value="${suitable.suitableId}">${suitable.suitableName}</option>
-											</c:forEach>
-									</select></td>
-									<td align="center" valign="middle"><input type="button"
-										onClick="moveOptions(this.form.suitables,this.form.selectedSuitableId);"
-										value="->"><br /> <input type="button"
-										onClick="moveOptions(this.form.selectedSuitableId,this.form.suitables);"
-										value="<-"></td>
-									<td><form:select multiple="multiple" size="10"
-											path="selectedSuitableId" style="width: 150">
-											<c:if test="${!empty restaurant.suitables}">
-												<c:forEach items="${restaurant.suitables}" var="suitable">
-													<form:option value="${suitable.suitableId}">${suitable.suitableName}</form:option>
+										<td><select multiple="multiple" id="suitables"
+											name="suitables" size="10" style="width: 150">
+												<c:forEach items="${suitables}" var="suitable">
+													<option value="${suitable.suitableId}">${suitable.suitableName}</option>
 												</c:forEach>
-											</c:if>
-										</form:select></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colspan="4"><form:label path="suitables">
-											<spring:message text="Recommended Dish(es)" />
-										</form:label></td>
-								</tr>
-								<tr>
-									<td colspan="4">1.<input type="text"
-										value="${recommendedDish1.recommendDishName}"
-										name="recommendedDishName1" class="form-control" /></td>
-								</tr>
-								<tr>
-									<td colspan="4">2.<input type="text"
-										value="${recommendedDish2.recommendDishName}"
-										name="recommendedDishName2" class="form-control" /></td>
-								</tr>
-								<tr>
-									<td colspan="4">3.<input type="text"
-										value="${recommendedDish3.recommendDishName}"
-										name="recommendedDishName3" class="form-control" /></td>
-								</tr>
+										</select></td>
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
+											onClick="moveOptions(this.form.suitables,this.form.selectedSuitableId);"
+											value="->"><br />
+										<br /> <input type="button"
+											onClick="moveOptions(this.form.selectedSuitableId,this.form.suitables);"
+											value="<-"></td>
+										<td><form:select multiple="multiple" size="10"
+												path="selectedSuitableId" style="width: 150">
+												<c:if test="${!empty restaurant.suitables}">
+													<c:forEach items="${restaurant.suitables}" var="suitable">
+														<form:option value="${suitable.suitableId}">${suitable.suitableName}</form:option>
+													</c:forEach>
+												</c:if>
+											</form:select></td>
 
-								<tr>
-									<td colspan="4"><form:label path="overview">
-											<spring:message text="Restaurant Overview" />
-										</form:label> <form:textarea path="overview" cssClass="form-control"
-											rows="20" cols="50" /></td>
-								</tr>
-								<tr>
-									<td><form:label path="restaurantImage">
-											<spring:message text="Restaurant Image" />
-										</form:label></td>
-									<td><img
-										src="${pageContext.request.contextPath}/resources/temp/image${id}"
-										height="60px" title="Image for ${restaurant.restaurantName}">
-									</td>
-									<td><form:input type="file" path="restaurantImage"
-											size="50" /></td>
-									<td></td>
-								</tr>
+									</tr>
+									<tr>
+										<td colspan="4"><form:label path="suitables">
+												<spring:message text="Recommended Dish(es)" />
+											</form:label></td>
+									</tr>
+									<tr>
+										<td colspan="4">1.<input type="text"
+											value="${recommendedDish1.recommendDishName}"
+											name="recommendedDishName1" class="form-control" /></td>
+									</tr>
+									<tr>
+										<td colspan="4">2.<input type="text"
+											value="${recommendedDish2.recommendDishName}"
+											name="recommendedDishName2" class="form-control" /></td>
+									</tr>
+									<tr>
+										<td colspan="4">3.<input type="text"
+											value="${recommendedDish3.recommendDishName}"
+											name="recommendedDishName3" class="form-control" /></td>
+									</tr>
 
-								<tr>
-									<td><form:label path="restaurantThumbnail">
-											<spring:message text="Restaurant Thumbnail Image" />
-										</form:label></td>
-									<td><img
-										src="${pageContext.request.contextPath}/resources/temp/thumb${id}"
-										height="60px"
-										title="Thumbnail for ${restaurant.restaurantName}"></td>
-									<td><form:input type="file" path="restaurantThumbnail"
-											size="50" /></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colspan="4"><form:label path="longitude">
-											<spring:message text="Restaurant Location" />
-										</form:label></td>
-								</tr>
-								<tr>
-									<td><form:label path="longitude">
-											<spring:message text="Longitude" />
-										</form:label></td>
-									<td><form:input path="longitude" cssClass="form-control" /></td>
-									<td><form:label path="lattitude">
-											<spring:message text="Lattitude" />
-										</form:label></td>
-									<td><form:input path="lattitude" cssClass="form-control" /></td>
-								</tr>
-								<tr>
-									<td colspan="2"><input type="submit"
-										class="btn btn-primary btn-lg"
-										value="<spring:message text="Edit Restaurant"/>" /></td>
-									<td colspan="2"><input type="reset" value="Clear"
-										class="btn btn-primary btn-lg"></td>
-								</tr>
-							</table>
-						</form:form>
-						<br>
-					</div>
-				</div>
+									<tr>
+										<td colspan="4"><form:label path="overview">
+												<spring:message text="Restaurant Overview" />
+											</form:label> <form:textarea path="overview" cssClass="form-control"
+												rows="20" cols="50" /></td>
+									</tr>
+									<tr>
+										<td><form:label path="restaurantImage">
+												<spring:message text="Restaurant Image" />
+											</form:label></td>
+										<td><img
+											src="${pageContext.request.contextPath}/resources/temp/image${id}"
+											height="60px" title="Image for ${restaurant.restaurantName}">
+										</td>
+										<td><form:input id="restaurantImage" type="file" path="restaurantImage"
+												size="50" /></td>
+										<td><img id="restImage" src="#" height="60px"
+											alt="your image" /></td>
+									</tr>
+
+									<tr>
+										<td><form:label path="restaurantThumbnail">
+												<spring:message text="Restaurant Thumbnail Image" />
+											</form:label></td>
+										<td><img
+											src="${pageContext.request.contextPath}/resources/temp/thumb${id}"
+											height="60px"
+											title="Thumbnail for ${restaurant.restaurantName}"></td>
+										<td><form:input id="restaurantThumbnail" type="file" path="restaurantThumbnail"
+												size="50" /></td>
+										<td><img id="restThumb" src="#" height="60px"
+											alt="your image" /></td>
+									</tr>
+									<tr>
+										<td colspan="4"><form:label path="longitude">
+												<spring:message text="Restaurant Location" />
+											</form:label></td>
+									</tr>
+									<tr>
+										<td><form:label path="longitude">
+												<spring:message text="Longitude" />
+											</form:label></td>
+										<td><form:input path="longitude" cssClass="form-control" /></td>
+										<td><form:label path="lattitude">
+												<spring:message text="Lattitude" />
+											</form:label></td>
+										<td><form:input path="lattitude" cssClass="form-control" /></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="submit"
+											class="btn btn-primary btn-lg"
+											value="<spring:message text="Edit Restaurant"/>" /></td>
+										<td colspan="2"><input type="reset" value="Clear"
+											class="btn btn-primary btn-lg"></td>
+									</tr>
+								</table>
+							</form:form>
+						</div>
+
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/jquery/jquery-1.10.2.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function readURL1(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#restImage').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#restaurantImage").change(function() {
+		readURL1(this);
+	});
+</script>
+<script type="text/javascript">
+	function readURL2(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#restThumb').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#restaurantThumbnail").change(function() {
+		readURL2(this);
+	});
+</script>
 </html>

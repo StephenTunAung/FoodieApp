@@ -58,8 +58,7 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header">Restaurant Registration Form</h1>
 
-				<div class="row">
-					<div class="col-xs-6 col-sm-3 placeholder">
+
 
 						<c:url var="addAction" value="/restaurant/add"></c:url>
 						<div id="restaurant" class="row list-group">
@@ -72,7 +71,7 @@
 												<spring:message text="Name of Business" />
 											</form:label></td>
 										<td><form:input path="restaurantName"
-												cssClass="form-control" /></td>
+												cssClass="form-control" size="20" /></td>
 
 										<td><form:label path="address">
 												<spring:message text="Address" />
@@ -142,41 +141,49 @@
 									<tr>
 										<td><form:label path="cuisineTypes">
 												<spring:message text="Type of Cuisine" />
-											</form:label> <form:select multiple="multiple" path="cuisineTypes"
+											</form:label></td>
+										<td><form:select multiple="multiple" path="cuisineTypes"
 												size="10" style="width:150">
 												<c:forEach items="${cuisineTypes}" var="cuisineType">
 													<form:option value="${cuisineType.cuisineTypeId}">${cuisineType.cuisineName}</form:option>
 												</c:forEach>
 											</form:select></td>
-										<td align="center" valign="middle"><input type="button"
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
 											onClick="moveOptions(this.form.cuisineTypes,this.form.selectedCuisineTypeId);"
-											value="->"><br /> <input type="button"
+											value="->"><br />
+										<br />
+										<input type="button"
 											onClick="moveOptions(this.form.selectedCuisineTypeId,this.form.cuisineTypes);"
 											value="<-"></td>
 										<td><form:select multiple="multiple" size="10"
 												path="selectedCuisineTypeId" style="width: 150">
 											</form:select></td>
-										<td></td>
 									</tr>
 
 									<tr>
 										<td><form:label path="restaurantTypes">
 												<spring:message text="Type of Restaurant" />
-											</form:label> <form:select multiple="multiple" path="restaurantTypes"
-												size="10" style="width:150">
+											</form:label></td>
+										<td><form:select multiple="multiple"
+												path="restaurantTypes" size="10" style="width:150">
 												<c:forEach items="${restaurantTypes}" var="restaurantType">
 													<form:option value="${restaurantType.restaurantTypeId}">${restaurantType.restaurantTypeName}</form:option>
 												</c:forEach>
 											</form:select></td>
-										<td align="center" valign="middle"><input type="button"
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
 											onClick="moveOptions(this.form.restaurantTypes,this.form.selectedRestaurantTypeId);"
-											value="->"><br /> <input type="button"
+											value="->"><br />
+										<br /> <input type="button"
 											onClick="moveOptions(this.form.selectedRestaurantTypeId,this.form.restaurantTypes);"
 											value="<-"></td>
 										<td><form:select multiple="multiple" size="10"
 												path="selectedRestaurantTypeId" style="width: 150">
 											</form:select></td>
-										<td></td>
+
 									</tr>
 
 									<tr>
@@ -195,21 +202,25 @@
 									<tr>
 										<td><form:label path="facilities">
 												<spring:message text="Other Facilities Available" />
-											</form:label> <form:select multiple="multiple" path="facilities" size="10"
-												style="width:150">
+											</form:label></td>
+										<td><form:select multiple="multiple" path="facilities"
+												size="10" style="width:150">
 												<c:forEach items="${facilities}" var="facility">
 													<form:option value="${facility.otherFacilityId}">${facility.otherFacilityName}</form:option>
 												</c:forEach>
 											</form:select></td>
-										<td align="center" valign="middle"><input type="button"
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
 											onClick="moveOptions(this.form.facilities,this.form.selectedFacilitiesId);"
-											value="->"><br /> <input type="button"
+											value="->"><br />
+										<br /> <input type="button"
 											onClick="moveOptions(this.form.selectedFacilitiesId,this.form.facilities);"
 											value="<-"></td>
 										<td><form:select multiple="multiple" size="10"
 												path="selectedFacilitiesId" style="width: 150">
 											</form:select></td>
-										<td></td>
+
 									</tr>
 									<tr>
 										<td><form:label path="fromPriceRange">
@@ -229,39 +240,21 @@
 										<td><form:label path="fromPriceRange">
 												<spring:message text="Operation Hours" />
 											</form:label></td>
-										<td><input type="text" name="fromOpHour1" /></td>
-										<td>to</td>
-										<td><input type="text" name="toOpHour1" /> M<input
-											type="checkbox" name="monday1" /> T<input type="checkbox"
-											name="tuesday1" /> W<input type="checkbox" name="wednesday1" />
-											T<input type="checkbox" name="thursday1" /> F<input
-											type="checkbox" name="friday1" /> S<input type="checkbox"
-											name="satursday1" /> S<input type="checkbox" name="sunday1" />
-										</td>
+
+										<td colspan="3"><input type="text"
+											name="restOperationHour1" class="form-control" /></td>
 
 									</tr>
 									<tr>
 										<td></td>
-										<td><input type="text" name="fromOpHour2" /></td>
-										<td>to</td>
-										<td><input type="text" name="toOpHour2" /> M<input
-											type="checkbox" name="monday2" /> T<input type="checkbox"
-											name="tuesday2" /> W<input type="checkbox" name="wednesday2" />
-											T<input type="checkbox" name="thursday2" /> F<input
-											type="checkbox" name="friday2" /> S<input type="checkbox"
-											name="satursday2" /> S<input type="checkbox" name="sunday2" /></td>
+										<td colspan="3"><input type="text"
+											name="restOperationHour2" class="form-control" /></td>
 
 									</tr>
 									<tr>
 										<td></td>
-										<td><input type="text" name="fromOpHour3" /></td>
-										<td>to</td>
-										<td><input type="text" name="toOpHour3" /> M<input
-											type="checkbox" name="monday3" /> T<input type="checkbox"
-											name="tuesday3" /> W<input type="checkbox" name="wednesday3" />
-											T<input type="checkbox" name="thursday3" /> F<input
-											type="checkbox" name="friday3" /> S<input type="checkbox"
-											name="satursday3" /> S<input type="checkbox" name="sunday3" /></td>
+										<td colspan="3"><input type="text"
+											name="restOperationHour3" class="form-control" /></td>
 
 									</tr>
 									<tr>
@@ -292,21 +285,25 @@
 									<tr>
 										<td><form:label path="suitables">
 												<spring:message text="Suitable For" />
-											</form:label> <form:select multiple="multiple" path="suitables" size="10"
-												style="width:150">
+											</form:label></td>
+										<td><form:select multiple="multiple" path="suitables"
+												size="10" style="width:150">
 												<c:forEach items="${suitables}" var="suitable">
 													<form:option value="${suitable.suitableId}">${suitable.suitableName}</form:option>
 												</c:forEach>
 											</form:select></td>
-										<td align="center" valign="middle"><input type="button"
+										<td align="center" valign="middle"><br />
+										<br />
+										<input type="button"
 											onClick="moveOptions(this.form.suitables,this.form.selectedSuitableId);"
-											value="->"><br /> <input type="button"
+											value="->"><br />
+										<br /> <input type="button"
 											onClick="moveOptions(this.form.selectedSuitableId,this.form.suitables);"
 											value="<-"></td>
 										<td><form:select multiple="multiple" size="10"
 												path="selectedSuitableId" style="width: 150">
 											</form:select></td>
-										<td></td>
+
 									</tr>
 
 									<tr>
@@ -339,7 +336,8 @@
 										<td></td>
 										<td><form:input type="file" path="restaurantImage"
 												size="50" /></td>
-										<td></td>
+										<td><img id="restImage" src="#" height="60px"
+											alt="your image" /></td>
 									</tr>
 
 									<tr>
@@ -349,7 +347,8 @@
 										<td></td>
 										<td><form:input type="file" path="restaurantThumbnail"
 												size="50" /></td>
-										<td></td>
+										<td><img id="restThumb" src="#" height="60px"
+											alt="your image" /></td>
 									</tr>
 									<tr>
 										<td colspan="4"><form:label path="longitude">
@@ -375,10 +374,48 @@
 								</table>
 							</form:form>
 						</div>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/jquery/jquery-1.10.2.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function readURL1(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#restImage').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#restaurantImage").change(function() {
+		readURL1(this);
+	});
+</script>
+<script type="text/javascript">
+	function readURL2(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#restThumb').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#restaurantThumbnail").change(function() {
+		readURL2(this);
+	});
+</script>
 </html>

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TBL_TOWNSHIP")
+@Table(name = "tbl_township")
 public class Township implements Serializable {
 
 	/**
@@ -18,11 +18,11 @@ public class Township implements Serializable {
 	private static final long serialVersionUID = -1700171940959832414L;
 
 	@Id
-	@Column(name = "TOWNSHIPID")
+	@Column(name = "TownshipID")
 	@GeneratedValue
 	private Integer townshipId;
 
-	@Column(name = "TOWNSHIPNAME")
+	@Column(name = "TownshipName")
 	private String townshipName;
 
 	public Integer getTownshipId() {

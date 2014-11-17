@@ -27,7 +27,7 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/docs.min.js" /></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js" /></script>
+	src="${pageContext.request.contextPath}/resources/jquery/jquery-1.10.2.js" /></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js" /></script>
 </head>
@@ -64,50 +64,65 @@
 
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">Restaurants List</h1>
+				
 
 				<div class="row">
-					<div class="col-xs-6 col-sm-3 placeholder">Search Part</div>
+					<div class="col-xs-6 col-sm-10 placeholder">
+					<h1 class="page-header">Search Restaurant by Name</h1>
+						
+						<form action="/FoodieApp/restaurant/search">
+							<table>
+								<tr>
+									<td>Enter Restaurant Name:</td>
+									<td></td>
+									<td><input type="text" name="findRestaurantName"
+										class="form-control" /></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="submit"
+										class="btn btn-primary btn-lg" value="Search Restaurant" /></td>
+										<td></td>
+								</tr>
+							</table>
+						</form>
+					</div>
 					<div class="info">
 						<h4>${message}</h4>
 					</div>
 				</div>
-
-				<c:if test="${!empty listRestaurants}">
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover">
-							<tr class="info">
-								<th>Restaurant ID</th>
-								<th>Restaurant Name</th>
-								<th>Township</th>
-								<th>Edit Restaurant</th>
-								<th>Event Detail</th>
-								<th>Promotion Detail</th>
-								<th>Delete</th>
+					<h1 class="page-header">Restaurants List</h1>
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<tr class="info">
+							<th>Restaurant ID</th>
+							<th>Restaurant Name</th>
+							<th>Township</th>
+							<th>Edit Restaurant</th>
+							<th>Event Detail</th>
+							<th>Promotion Detail</th>
+							<th>Delete</th>
+						</tr>
+						<c:forEach items="${listRestaurants}" var="restaurant">
+							<tr>
+								<td>${restaurant.id}</td>
+								<td><a
+									href="<c:url value='/restaurant/edit/${restaurant.id}' />">${restaurant.restaurantName}</a></td>
+								<td>${restaurant.township.townshipName}</td>
+								<td><a
+									href="<c:url value='/restaurant/edit/${restaurant.id}' />">Edit
+										Restaurant</a></td>
+								<td><a
+									href="<c:url value='/event/showEventDetail/${restaurant.id}' />">Event
+										Detail</a></td>
+								<td><a
+									href="<c:url value='/promotion/showPromotionDetail/${restaurant.id}' />">Promotion
+										Detail</a></td>
+								<td><a
+									href="<c:url value='/restaurant/remove/${restaurant.id}' />">Delete</a></td>
 							</tr>
-							<c:forEach items="${listRestaurants}" var="restaurant">
-								<tr>
-									<td>${restaurant.id}</td>
-									<td><a
-										href="<c:url value='/restaurant/edit/${restaurant.id}' />">${restaurant.restaurantName}</a></td>
-									<td>${restaurant.township.townshipName}</td>
-									<td><a
-										href="<c:url value='/restaurant/edit/${restaurant.id}' />">Edit
-											Restaurant</a></td>
-									<td><a
-										href="<c:url value='/event/showEventDetail/${restaurant.id}' />">Event
-											Detail</a></td>
-																		<td><a
-										href="<c:url value='/promotion/showPromotionDetail/${restaurant.id}' />">Promotion
-											Detail</a></td>
-									<td><a
-										href="<c:url value='/restaurant/remove/${restaurant.id}' />">Delete</a></td>
-								</tr>
-							</c:forEach>
-						</table>
-					</div>
-				</c:if>
-
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

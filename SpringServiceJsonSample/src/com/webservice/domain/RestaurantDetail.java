@@ -14,11 +14,29 @@ public class RestaurantDetail {
 	private String paymentMethod;
 	private float fromPriceRange;
 	private float toPriceRange;
-	private String alcoholicAvailable;
+	private boolean alcoholicAvailable;
 	private int noOfSeats;
 	private String restaurantTypeList;
 	private String otherFacilitiesList;
 	private String suitableList;
+	private String recommendedDishList;
+	private String operationHourList;
+
+	public String getRecommendedDishList() {
+		return recommendedDishList;
+	}
+
+	public void setRecommendedDishList(String recommendedDishList) {
+		this.recommendedDishList = recommendedDishList;
+	}
+
+	public String getOperationHourList() {
+		return operationHourList;
+	}
+
+	public void setOperationHourList(String operationHourList) {
+		this.operationHourList = operationHourList;
+	}
 
 	public String getAddress() {
 		return address;
@@ -84,11 +102,11 @@ public class RestaurantDetail {
 		this.toPriceRange = toPriceRange;
 	}
 
-	public String getAlcoholicAvailable() {
+	public boolean isAlcoholicAvailable() {
 		return alcoholicAvailable;
 	}
 
-	public void setAlcoholicAvailable(String alcoholicAvailable) {
+	public void setAlcoholicAvailable(boolean alcoholicAvailable) {
 		this.alcoholicAvailable = alcoholicAvailable;
 	}
 

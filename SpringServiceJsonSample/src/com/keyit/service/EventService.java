@@ -24,7 +24,6 @@ public class EventService {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 
-			// Event toUpdate = this.getEventById(event.getEventID());
 			if (event.getEventId() != null) {
 				session.update(event);
 			} else {

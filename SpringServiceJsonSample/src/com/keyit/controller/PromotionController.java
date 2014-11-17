@@ -3,6 +3,9 @@ package com.keyit.controller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialBlob;
@@ -76,6 +79,21 @@ public class PromotionController {
 		Promotion savedPromotion = this.promotionService
 				.getPromotionIdByRestaurantId(Integer.parseInt(request
 						.getParameter("restId")));
+
+		Date date;
+		String formattedDate = null;
+		try {
+			date = new SimpleDateFormat("yyyy-MMM-dd").parse(promotion
+					.getValidDate());
+			formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		} catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		if (formattedDate != null) {
+			promotion.setValidDate(formattedDate);
+		} else {
+			promotion.setValidDate(savedPromotion.getValidDate());
+		}
 
 		// Image part
 		Blob blob = null; // is our blob object

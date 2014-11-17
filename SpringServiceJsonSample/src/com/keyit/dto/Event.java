@@ -49,7 +49,7 @@ public class Event implements Serializable {
 	private String eventTime;
 
 	@Column(name = "CoverCharges")
-	private String coverCharges;
+	private float coverCharges;
 
 	@Column(name = "EventImage")
 	@Lob
@@ -120,11 +120,11 @@ public class Event implements Serializable {
 		this.eventTime = eventTime;
 	}
 
-	public String getCoverCharges() {
+	public float getCoverCharges() {
 		return coverCharges;
 	}
 
-	public void setCoverCharges(String coverCharges) {
+	public void setCoverCharges(float coverCharges) {
 		this.coverCharges = coverCharges;
 	}
 

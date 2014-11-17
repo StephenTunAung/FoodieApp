@@ -3,9 +3,11 @@ package com.keyit.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,29 @@ public class RestaurantService {
 		List<Restaurant> restaurants = Collections.emptyList();
 		try {
 			restaurants = session.createQuery("FROM Restaurant").list();
+		} catch (HibernateException he) {
+			logger.error(he.getMessage());
+		}
+		return restaurants;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Restaurant> searchRestaurants(String restaurantName) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Restaurant> restaurants = Collections.emptyList();
+		try {
+			if ("".equals(restaurantName)) {
+				restaurants = session.createQuery("FROM Restaurant").list();
+			} else {
+				restaurantName += "%";
+				Criteria criteria = session.createCriteria(Restaurant.class);
+				criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+				criteria.add(Restrictions
+						.like("restaurantName", restaurantName));
+
+				restaurants = criteria.list();
+
+			}
 		} catch (HibernateException he) {
 			logger.error(he.getMessage());
 		}

@@ -85,7 +85,8 @@ public class RestaurantController {
 		modelAndView.addObject("suitables",
 				this.suitableService.getAllSuitables());
 
-		List<OperationHour> threeOperationHours = createThreeOperationHours();
+		List<OperationHour> threeOperationHours = this
+				.createThreeOperationHours();
 
 		modelAndView.addObject("threeOperationHours", threeOperationHours);
 
@@ -193,6 +194,27 @@ public class RestaurantController {
 
 		modelAndView.addObject("listRestaurants",
 				this.restaurantService.getAllRestaurants());
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/restaurant/search", method = RequestMethod.GET)
+	public ModelAndView searchRestaurants(HttpServletRequest request) {
+
+		// Authentication check starts
+		boolean isLogin = this.isLogin(request);
+		if (!isLogin) {
+			ModelAndView loginFail = new ModelAndView(
+					"redirect:/restaurant/showLoginPage");
+			return loginFail;
+		}
+		// Authentication check ends
+
+		ModelAndView modelAndView = new ModelAndView("restaurantList");
+		
+		String restaurantName = request.getParameter("findRestaurantName");
+
+		modelAndView.addObject("listRestaurants",
+				this.restaurantService.searchRestaurants(restaurantName));
 		return modelAndView;
 	}
 
@@ -366,25 +388,14 @@ public class RestaurantController {
 		restaurant.setSuitables(selectedSuitables);
 
 		this.restaurantService.updateRestaurant(restaurant);
+		List<OperationHour> operationHours = this.getOperationHour(request);
 		this.operationHourService
 				.deleteOperationHourByResID(restaurant.getId());
-
-		OperationHour operationHour1 = getUpdatedOperationHour1(request);
-		if (operationHour1 != null) {
-			operationHour1.setRestaurant(restaurant);
-			this.operationHourService.saveOperationHour(operationHour1);
-		}
-
-		OperationHour operationHour2 = getUpdatedOperationHour2(request);
-		if (operationHour2 != null) {
-			operationHour2.setRestaurant(restaurant);
-			this.operationHourService.saveOperationHour(operationHour2);
-		}
-
-		OperationHour operationHour3 = getUpdatedOperationHour3(request);
-		if (operationHour3 != null) {
-			operationHour3.setRestaurant(restaurant);
-			this.operationHourService.saveOperationHour(operationHour3);
+		if (operationHours.size() > 0) {
+			for (OperationHour operationHour : operationHours) {
+				operationHour.setRestaurant(restaurant);
+				this.operationHourService.saveOperationHour(operationHour);
+			}
 		}
 
 		List<RecommendedDish> recommendedDishes = this
@@ -405,97 +416,100 @@ public class RestaurantController {
 		return modelAndView;
 	}
 
-	private OperationHour getUpdatedOperationHour3(HttpServletRequest request) {
-		String fromOpHour3 = request.getParameter("fromOpHour3");
-		String toOpHour3 = request.getParameter("toOpHour3");
-
-		if (fromOpHour3.isEmpty() && toOpHour3.isEmpty()) {
-			return null;
-		}
-
-		String sunday3 = request.getParameter("sunday3");
-		String monday3 = request.getParameter("monday3");
-		String tuesday3 = request.getParameter("tuesday3");
-		String wednesday3 = request.getParameter("wednesday3");
-		String thursday3 = request.getParameter("thursday3");
-		String friday3 = request.getParameter("friday3");
-		String satursday3 = request.getParameter("satursday3");
-		OperationHour operationHour3 = new OperationHour();
-		operationHour3.setFromOpHour(fromOpHour3);
-		operationHour3.setToOpHour(toOpHour3);
-
-		operationHour3.setSunday(stringToBoolean(sunday3));
-		operationHour3.setMonday(stringToBoolean(monday3));
-		operationHour3.setTuesday(stringToBoolean(tuesday3));
-		operationHour3.setWednesday(stringToBoolean(wednesday3));
-		operationHour3.setThursday(stringToBoolean(thursday3));
-		operationHour3.setFriday(stringToBoolean(friday3));
-		operationHour3.setSatursday(stringToBoolean(satursday3));
-
-		return operationHour3;
-	}
-
-	private OperationHour getUpdatedOperationHour2(HttpServletRequest request) {
-		String fromOpHour2 = request.getParameter("fromOpHour2");
-		String toOpHour2 = request.getParameter("toOpHour2");
-
-		if (fromOpHour2.isEmpty() && toOpHour2.isEmpty()) {
-			return null;
-		}
-
-		String sunday2 = request.getParameter("sunday2");
-		String monday2 = request.getParameter("monday2");
-		String tuesday2 = request.getParameter("tuesday2");
-		String wednesday2 = request.getParameter("wednesday2");
-		String thursday2 = request.getParameter("thursday2");
-		String friday2 = request.getParameter("friday2");
-		String satursday2 = request.getParameter("satursday2");
-
-		OperationHour operationHour2 = new OperationHour();
-		operationHour2.setFromOpHour(fromOpHour2);
-		operationHour2.setToOpHour(toOpHour2);
-
-		operationHour2.setSunday(stringToBoolean(sunday2));
-		operationHour2.setMonday(stringToBoolean(monday2));
-		operationHour2.setTuesday(stringToBoolean(tuesday2));
-		operationHour2.setWednesday(stringToBoolean(wednesday2));
-		operationHour2.setThursday(stringToBoolean(thursday2));
-		operationHour2.setFriday(stringToBoolean(friday2));
-		operationHour2.setSatursday(stringToBoolean(satursday2));
-		return operationHour2;
-	}
-
-	private OperationHour getUpdatedOperationHour1(HttpServletRequest request) {
-		OperationHour operationHour1 = new OperationHour();
-
-		String fromOpHour1 = request.getParameter("fromOpHour1");
-		String toOpHour1 = request.getParameter("toOpHour1");
-
-		if (fromOpHour1.isEmpty() && toOpHour1.isEmpty()) {
-			return null;
-		}
-
-		String sunday1 = request.getParameter("sunday1");
-		String monday1 = request.getParameter("monday1");
-		String tuesday1 = request.getParameter("tuesday1");
-		String wednesday1 = request.getParameter("wednesday1");
-		String thursday1 = request.getParameter("thursday1");
-		String friday1 = request.getParameter("friday1");
-		String satursday1 = request.getParameter("satursday1");
-
-		operationHour1.setFromOpHour(fromOpHour1);
-		operationHour1.setToOpHour(toOpHour1);
-
-		operationHour1.setSunday(stringToBoolean(sunday1));
-		operationHour1.setMonday(stringToBoolean(monday1));
-		operationHour1.setTuesday(stringToBoolean(tuesday1));
-		operationHour1.setWednesday(stringToBoolean(wednesday1));
-		operationHour1.setThursday(stringToBoolean(thursday1));
-		operationHour1.setFriday(stringToBoolean(friday1));
-		operationHour1.setSatursday(stringToBoolean(satursday1));
-
-		return operationHour1;
-	}
+	// private OperationHour getUpdatedOperationHour3(HttpServletRequest
+	// request) {
+	// String fromOpHour3 = request.getParameter("fromOpHour3");
+	// String toOpHour3 = request.getParameter("toOpHour3");
+	//
+	// if (fromOpHour3.isEmpty() && toOpHour3.isEmpty()) {
+	// return null;
+	// }
+	//
+	// String sunday3 = request.getParameter("sunday3");
+	// String monday3 = request.getParameter("monday3");
+	// String tuesday3 = request.getParameter("tuesday3");
+	// String wednesday3 = request.getParameter("wednesday3");
+	// String thursday3 = request.getParameter("thursday3");
+	// String friday3 = request.getParameter("friday3");
+	// String satursday3 = request.getParameter("satursday3");
+	// OperationHour operationHour3 = new OperationHour();
+	// operationHour3.setFromOpHour(fromOpHour3);
+	// operationHour3.setToOpHour(toOpHour3);
+	//
+	// operationHour3.setSunday(stringToBoolean(sunday3));
+	// operationHour3.setMonday(stringToBoolean(monday3));
+	// operationHour3.setTuesday(stringToBoolean(tuesday3));
+	// operationHour3.setWednesday(stringToBoolean(wednesday3));
+	// operationHour3.setThursday(stringToBoolean(thursday3));
+	// operationHour3.setFriday(stringToBoolean(friday3));
+	// operationHour3.setSatursday(stringToBoolean(satursday3));
+	//
+	// return operationHour3;
+	// }
+	//
+	// private OperationHour getUpdatedOperationHour2(HttpServletRequest
+	// request) {
+	// String fromOpHour2 = request.getParameter("fromOpHour2");
+	// String toOpHour2 = request.getParameter("toOpHour2");
+	//
+	// if (fromOpHour2.isEmpty() && toOpHour2.isEmpty()) {
+	// return null;
+	// }
+	//
+	// String sunday2 = request.getParameter("sunday2");
+	// String monday2 = request.getParameter("monday2");
+	// String tuesday2 = request.getParameter("tuesday2");
+	// String wednesday2 = request.getParameter("wednesday2");
+	// String thursday2 = request.getParameter("thursday2");
+	// String friday2 = request.getParameter("friday2");
+	// String satursday2 = request.getParameter("satursday2");
+	//
+	// OperationHour operationHour2 = new OperationHour();
+	// operationHour2.setFromOpHour(fromOpHour2);
+	// operationHour2.setToOpHour(toOpHour2);
+	//
+	// operationHour2.setSunday(stringToBoolean(sunday2));
+	// operationHour2.setMonday(stringToBoolean(monday2));
+	// operationHour2.setTuesday(stringToBoolean(tuesday2));
+	// operationHour2.setWednesday(stringToBoolean(wednesday2));
+	// operationHour2.setThursday(stringToBoolean(thursday2));
+	// operationHour2.setFriday(stringToBoolean(friday2));
+	// operationHour2.setSatursday(stringToBoolean(satursday2));
+	// return operationHour2;
+	// }
+	//
+	// private OperationHour getUpdatedOperationHour1(HttpServletRequest
+	// request) {
+	// OperationHour operationHour1 = new OperationHour();
+	//
+	// String fromOpHour1 = request.getParameter("fromOpHour1");
+	// String toOpHour1 = request.getParameter("toOpHour1");
+	//
+	// if (fromOpHour1.isEmpty() && toOpHour1.isEmpty()) {
+	// return null;
+	// }
+	//
+	// String sunday1 = request.getParameter("sunday1");
+	// String monday1 = request.getParameter("monday1");
+	// String tuesday1 = request.getParameter("tuesday1");
+	// String wednesday1 = request.getParameter("wednesday1");
+	// String thursday1 = request.getParameter("thursday1");
+	// String friday1 = request.getParameter("friday1");
+	// String satursday1 = request.getParameter("satursday1");
+	//
+	// operationHour1.setFromOpHour(fromOpHour1);
+	// operationHour1.setToOpHour(toOpHour1);
+	//
+	// operationHour1.setSunday(stringToBoolean(sunday1));
+	// operationHour1.setMonday(stringToBoolean(monday1));
+	// operationHour1.setTuesday(stringToBoolean(tuesday1));
+	// operationHour1.setWednesday(stringToBoolean(wednesday1));
+	// operationHour1.setThursday(stringToBoolean(thursday1));
+	// operationHour1.setFriday(stringToBoolean(friday1));
+	// operationHour1.setSatursday(stringToBoolean(satursday1));
+	//
+	// return operationHour1;
+	// }
 
 	private Set<OtherFacility> getSelectedFacility(Restaurant restaurant) {
 		List<String> selectedFacilitiesID = restaurant
@@ -568,9 +582,7 @@ public class RestaurantController {
 
 		for (int i = 0; i < 3; i++) {
 			OperationHour operationHour = new OperationHour();
-			operationHour.setFromOpHour("");
-			operationHour.setToOpHour("");
-			operationHour.setSunday(true);
+			operationHour.setRestOperationHours("");
 			operationHours.add(operationHour);
 
 		}
@@ -589,24 +601,30 @@ public class RestaurantController {
 	}
 
 	private List<OperationHour> getOperationHour(HttpServletRequest request) {
-
 		List<OperationHour> operationHours = new ArrayList<OperationHour>();
 
-		OperationHour operationHour1 = getUpdatedOperationHour1(request);
+		OperationHour operationHour1 = new OperationHour();
+		String restOperationHour1 = request.getParameter("restOperationHour1");
 
-		if (null != operationHour1) {
+		if (!("".equals(restOperationHour1))) {
+
+			operationHour1.setRestOperationHours(restOperationHour1);
 			operationHours.add(operationHour1);
 		}
 
-		OperationHour operationHour2 = getUpdatedOperationHour2(request);
+		OperationHour operationHour2 = new OperationHour();
+		String restOperationHour2 = request.getParameter("restOperationHour2");
 
-		if (operationHour2 != null) {
+		if (!("".equals(restOperationHour2))) {
+			operationHour2.setRestOperationHours(restOperationHour2);
 			operationHours.add(operationHour2);
 		}
 
-		OperationHour operationHour3 = getUpdatedOperationHour3(request);
-		if (operationHour3 != null) {
+		OperationHour operationHour3 = new OperationHour();
+		String restOperationHour3 = request.getParameter("restOperationHour3");
 
+		if (!("".equals(restOperationHour3))) {
+			operationHour3.setRestOperationHours(restOperationHour3);
 			operationHours.add(operationHour3);
 		}
 
@@ -646,14 +664,14 @@ public class RestaurantController {
 
 	}
 
-	private boolean stringToBoolean(String str) {
-
-		if ("on".equalsIgnoreCase(str)) {
-			return true;
-		}
-
-		return false;
-	}
+	// private boolean stringToBoolean(String str) {
+	//
+	// if ("on".equalsIgnoreCase(str)) {
+	// return true;
+	// }
+	//
+	// return false;
+	// }
 
 	private void saveOperationHour(Restaurant restaurant,
 			List<OperationHour> operationHours) {
